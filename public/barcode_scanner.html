@@ -570,8 +570,8 @@
           "allowedProducts",
           JSON.stringify(allowedProducts)
         );
-// AFTER DEPLOIMENT,THE "https://kidbank.com" MUST CHANGE TO THE DEPLOIMENT URL, IN THE "const checkoutURL" -To be able to load the checkout product list 
-        const checkoutURL = `https://kidbank.com/checkout.html?products=${encodeURIComponent(
+
+        const checkoutURL = `https://k1dbank.netlify.app/checkout.html?products=${encodeURIComponent(
           JSON.stringify(allowedProducts)
         )}`;
         qrContainer.innerHTML = `<h3>Scan this QR code to proceed to payment</h3>`;
