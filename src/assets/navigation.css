@@ -1,0 +1,205 @@
+/* Navigation */
+
+.sidebar {
+  width: 260px;
+  height: 100vh;
+  background-color: #fff;
+  border-right: 1px solid #e1e4e8;
+  position: fixed;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  transition: width 0.3 ease, transform 0.3s ease;
+  overflow-y: auto;
+  z-index: 100;
+}
+
+.sidebar.collapsed {
+  width: 50px; /* Ensure the width shrinks */
+}
+
+/* Hide the tyext when it colapsed */
+.sidebar.collapsed .logo,
+.sidebar.collapsed .menu-item span,
+.sidebar.collapsed .user-profile {
+  display: none;
+}
+
+/* Make menu icons center-alligned when collapsed */
+.sidebar.collapse .menu-item {
+  justify-content: center;
+  display: none;
+  margin: 0;
+}
+
+.sidebar .menu-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+}
+
+/* Toggle button */
+.toggle-button {
+  position: fixed;
+  top: 16px;
+  left: 16px;
+  background-color: white;
+  border: 1px solid #e1e4e8;
+  border-radius: 4px;
+  padding: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.sidebar.collapsed + .toggle-button .toggle-icon {
+  transform: rotate(180deg);
+}
+
+/* Make menu icons center-alligned when collapsed */
+.sidebar.collapse .menu-item {
+  justify-content: center;
+  display: none;
+  margin: 0;
+}
+
+/* Toggle button */
+.toggle-button {
+  position: fixed;
+  top: 16px;
+  left: 16px;
+  background-color: white;
+  border: 1px solid #e1e4e8;
+  border-radius: 4px;
+  padding: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.sidebar-header {
+  display: flex;
+  align-self: center;
+  padding: 16px;
+  border-bottom: 1px solid #e1e4e8;
+  justify-content: space-between;
+  position: relative;
+}
+
+.logo {
+  font-weight: 600;
+  font-size: var(--p-size-large);
+  color: #1a202c;
+  transition: opacity 0.3s ease;
+  flex: 0 1 auto;
+}
+
+.collapsed .logo {
+  opacity: 0;
+}
+
+.menu-list {
+  list-style: none;
+  padding: 10px 0;
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  color: #005f73;
+  font-size: var(--span-size-s);
+  cursor: L pointer;
+  transition: 0.3s;
+}
+
+.menu-item i {
+  margin-right: 12px;
+  font-size: 16px;
+}
+
+.collapsed .menu-item span {
+  display: none;
+}
+
+.menu-item:hover,
+.menu-item.active {
+  background-color: #edf2ff;
+  color: #002432;
+  font-weight: 500;
+}
+
+.user-profile {
+  margin-top: auto;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  border-top: 1px solid #f0f4f8;
+  transition: opacity 0.3s ease;
+}
+
+.user-name {
+  color: #002432;
+  font-size: var(--p-size-medium);
+}
+
+.user-status {
+  color: #002432;
+  font-size: var(--p-size-medium);
+}
+
+.collapsed .user-profile {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #f0f4f8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  color: #4a5568;
+  margin-right: 12px;
+}
+.avatar-logo,
+.top-logo {
+  width: 65px;
+  height: 55px;
+}
+
+.toggle-button {
+  background-color: white;
+  border: 1px solid #e1e4e8;
+  border-radius: 4px;
+  padding: 8px;
+  cursor: pointer;
+  position: fixed;
+  top: 16px;
+  left: 16px;
+  z-index: 100;
+  transition: all 0.3s ease;
+}
+
+/* Icon animation for toggle*/
+
+.toggle-icon {
+  transition: transform 0.3s ease;
+}
+
+.sidebar:not(.colapsed) .toggle-icon {
+  transform: rotate(180deg);
+}
+
+.sidebar.collapsed + .main-content {
+  margin-left: 60px;
+}
+
+.sidebar.collapsed ~ .main-content {
+  margin-left: 50px; /* Reduce gap when sidebar is collapsed */
+}
+

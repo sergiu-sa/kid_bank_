@@ -1,0 +1,57 @@
+/* Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --h1-size: 1.8rem;
+  --h2-size: 1.2rem;
+  --h3-size: 1rem;
+  --h4-size: 1.2rem;
+  --h5-size: 1.2rem;
+
+  --p-size-small: 0.85rem;
+  --p-size-medium: 1rem;
+  --p-size-large: 1.5rem;
+  --view-all-size: 1rem;
+
+  --span-size-s: 0.85rem;
+  --span-size-m: 1.2rem;
+
+  --border-radius-containers: 10px;
+
+  --bg-color: #f9f9f9;
+  --container-color: #ffffff;
+
+  --nav-icon-before-hover: #002432;
+  --nav-icon-after-hover: #005f73;
+
+  --h2-color: #002432;
+  --h3-color: #002432;
+  --h4-color: #002432;
+
+  --refreshments-color: #94d2bd;
+  --gift-color: #005f73;
+  --clothing-color: #b3cea3;
+  --error-color: #ff396f;
+  --text-dark: #333333;
+  --text-light: #999999;
+  --success-color: #2dce89;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-dark);
+  line-height: 1.6;
+}
+
+.app-container {
+  position: relative;
+  min-height: 100vh;
+  padding-bottom: 70px; /* Space for bottom nav on mobile */
+}
+
+

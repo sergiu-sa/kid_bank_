@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>KidBank - Smart Money for Teens</title>
+    <link rel="stylesheet" href="/src/assets/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="/src/js/main.js" defer></script>
+    <script src="/src/js/bankAccount.js" defer></script>
+    <script src="/src/js/recentTransactions.js" defer></script>
+    <script src="/src/js/buttons.js" defer></script>
+
+  </head>
+  <body>
+    <div class="app-container">
+      <!-- Navigation -->
+
+      <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+          <span class="logo">KidBank</span>
+        </div>
+        <ul class="menu-list">
+          <li class="menu-item active">
+            <i class="fas fa-home"></i> <span class="menu-text">Home</span>
+          </li>
+          <li class="menu-item">
+            <i class="fa-solid fa-money-check-dollar"></i>
+            <span class="menu-text">Budget</span>
+          </li>
+          <li class="menu-item">
+            <i class="fa-solid fa-wallet"></i>
+            <span class="menu-text">Wallet</span>
+          </li>
+          <li class="menu-item">
+            <i class="fas fa-users"></i>
+            <span class="menu-text">About</span>
+          </li>
+          <li class="menu-item">
+            <i class="fa-solid fa-gear"></i> 
+            <span class="menu-text">Settings</span>
+          </li>
+        </ul>
+
+        <div class="user-profile">
+          <div><img src="./img/piggy-logo.png" class="avatar-logo" alt="kidbank logo"></div>
+          <div>
+            <div class="user-name">KidBank</div>
+            <div class="user-status">Pro trial</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Toggle button outside sidebar for desktop only -->
+      <button class="toggle-button" id="toggleSidebar">
+        <i class="fas fa-chevron-left toggle-icon"></i>
+      </button>
+
+      <!-- Main Content -->
+      <main class="main-content">
+        <!-- RENATE - PROFILE - START -->
+         <section class="profile-container">
+              <a href="/src/pages/login.html">
+              <div class="profile-img">
+                <i class="fa-solid fa-user"></i>
+              </div></a>
+              <div id="profile-name">
+                <p id="username">username</p>
+              </div>
+         </section>
+
+        <!-- RENATE - HERO SECTION - START -->
+        <section class="hero-container">
+          
+          <!-- CARD INFORMATION -->
+          <article class="hero-right">
+            <div class="card-header">
+              <p>Your Balance:</p>
+              <button onclick="hideShow()" class="card-icon">
+                <i class="fas fa-eye"></i>
+              </button>
+            </div>
+            
+            <div class="balance-amount">
+              <div id="blurred-currency" class="currency">
+                <h1 id="re_balance">$0.00</h1>
+              </div>
+            </div>
+          </article>
+
+          <!-- HERO BTNS -->
+          <article class="hero-left">
+            <button class="action-btn add-money" aria-label="Request Money">
+              <i class="fas fa-hand-holding-usd"></i>
+              <span>Request</span>
+            </button>
+
+            <a href="/public/barcode_scanner.html" class="action-btn pay" aria-label=" Scann barcodes">
+             <i class="fa-solid fa-barcode"></i></i>
+             <span class="scann_font">Scan</span>
+            </a>
+
+
+            <button class="action-btn request" aria-label="Savings">
+              <i class="fas fa-piggy-bank"></i>
+              <span class="add-goal">Savings</span>
+            </button>
+          </article>
+        </section>
+        <!-- RENATE - HERO SECTION - END -->
+
+        <!-- Recent Transactions -->
+        <section class="transactions-monthly-overview-container">
+          <section class="recent-transactions">
+            <div class="section-header">
+              <h2>recent-transactions</h2>
+            </div>
+
+            <div id="js-transactions"></div>        
+          </section>
+
+          <section class="monthly-overview">
+            <div class="section-header">
+              <h2>Monthly Overview</h2>
+            </div>
+            <div class="monthly-overview-card">
+              <div class="card-side front">
+                <figure class="pie-charts">
+                  <h4>Savings</h4>
+                  <div class="pie"></div>
+
+                  <figcaption class="legends">
+                    <span class="category-color-entertainment"
+                      >Entertainment</span
+                    >
+                    <span class="category-color-electronics">Electronics</span>
+                    <span class="category-color-clothes">Clothes</span>
+                    <span class="category-color-travel">Travel</span>
+
+                    <span class="category-color-sport">Sport</span>
+                  </figcaption>
+                </figure>
+              </div>
+              <div class="card-side back">
+                <div class="monthly-spending-title">Monthly Spending</div>
+                <div class="chart-wrapper">
+                  <div class="y-axis">
+                    <span>$400</span>
+                    <span>$300</span>
+                    <span>$200</span>
+                    <span>$100</span>
+                    <span>$0</span>
+                  </div>
+                  <div>
+                    <div class="chart-container">
+                      <div class="food-bar">$100</div>
+                      <div class="entertainment-bar">$250</div>
+                      <div class="shopping-bar">$180</div>
+                    </div>
+                    <div class="months">
+                      <span>Food</span>
+                      <span>Entertainment</span>
+                      <span>Shopping</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </section>
+
+        <!-- Spending Categories -->
+        <section class="spending-categories">
+          <div class="section-header">
+            <h2>This Month's Spending</h2>
+            <a href="#" class="view-all">View All</a>
+          </div>
+          <div class="category-list">
+            <div class="category-card">
+              <div class="category-icon food">
+                <i class="fas fa-utensils"></i>
+              </div>
+              <div class="category-info">
+                <h3>Food</h3>
+                <div class="progress-bar">
+                  <div class="progress" style="width: 65%"></div>
+                </div>
+                <p>$98.50 <span class="budget">of $150</span></p>
+              </div>
+            </div>
+            <div class="category-card">
+              <div class="category-icon entertainment">
+                <i class="fas fa-gamepad"></i>
+              </div>
+              <div class="category-info">
+                <h3>Entertainment</h3>
+                <div class="progress-bar">
+                  <div class="progress" style="width: 80%"></div>
+                </div>
+                <p>$40.00 <span class="budget">of $50</span></p>
+              </div>
+            </div>
+            <div class="category-card">
+              <div class="category-icon shopping">
+                <i class="fas fa-shopping-bag"></i>
+              </div>
+              <div class="category-info">
+                <h3>Shopping</h3>
+                <div class="progress-bar">
+                  <div class="progress" style="width: 45%"></div>
+                </div>
+                <p>$67.25 <span class="budget">of $150</span></p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Restricted Purchase Modal -->
+        <div class="modal" id="restrictedModal">
+          <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="modal-icon restricted">
+              <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            <h2>Purchase Restricted</h2>
+            <p>
+              This purchase has been restricted because it falls into a category
+              that's not allowed for your account.
+            </p>
+            <p class="item-details">
+              Item: <span id="restrictedItem">Energy Drink</span>
+            </p>
+            <p class="restriction-reason">
+              Reason: <span id="restrictionReason">Age restricted product</span>
+            </p>
+            <button class="modal-btn close-btn">OK, I Understand</button>
+          </div>
+        </div>
+
+        <!-- Assign Tasks -->
+        <section>
+          <div class="section-header">
+            <h2>Your Tasks</h2>
+            <a href="#" class="view-all">View All</a>
+          </div>
+          <div class="task-list">
+            <div class="task-card">
+              <div class="checkbox-icon color">
+              <i class="fa-solid fa-broom"></i>
+            </div>
+            <div class="task-info">
+              <h3>Clean your room</h3>
+              <p>Tidy up, dust and organise things</p>
+            </div>
+            <div class="task-amount ">
+              <p class="amount">$ 10</p>
+              <label><input type="checkbox" /> </label>
+            </div>
+            </div>
+
+            <div class="task-card">
+              <div class="checkbox-icon color-icon-trash">
+              <i class="fa-solid fa-trash"></i>
+            </div>
+            <div class="task-info">
+              <h3>Take out the trash</h3>
+              <p>Collect bag and dispose</p>
+            </div>
+            <div class="task-amount ">
+              <p class="amount  ">$ 15</p>
+              <label><input type="checkbox" /> </label>
+            </div>
+            </div>
+
+            <div class="task-card">
+              <div class="checkbox-icon color-icon-dishes">
+              <i class="fa-solid fa-utensils"></i>
+            </div>
+            <div class="task-info">
+              <h3>Do the dishes</h3>
+              <p>Wash, dry and put away</p>
+            </div>
+            <div class="task-amount ">
+              <p class="amount">$ 15</p>
+              <label><input type="checkbox" /> </label>
+            </div>
+          </div>
+        </section>
+
+        <!-- Online Shop Section -->
+       <section class="store-section">
+      <div class="store-header">
+        <h2>Shop Online</h2>
+      </div>
+      <div class="add-shop-form">
+        <input
+          type="text"
+          id="shopUrlInput"
+          placeholder="Enter store URL (e.g., https://www.example.com)"
+        />
+        <button id="addShopButton">Add Store</button>
+      </div>
+
+      <div class="shop-list" id="shopList">
+        <button
+          class="shop-card"
+          data-default="true"
+          data-url="https://www.aliexpress.com"
+        >
+          <i class="fa-solid fa-box-open"></i> AliExpress
+        </button>
+        <button
+          class="shop-card"
+          data-default="true"
+          data-url="https://www.nelly.com"
+        >
+          <i class="fa-solid fa-shirt"></i> Nelly
+        </button>
+        <button 
+        class="shop-card" 
+        data-default="true" 
+        data-widget="elfsight"
+        >
+          <i class="fa-solid fa-store"></i> KB Food
+        </button>
+      </div>
+
+      <div class="shop-preview-container" id="shopPreviewArea">
+        <div class="loading-overlay" id="previewLoader">Loading...</div>
+        <button id="closePreviewBtn" class="shop-close-btn">Close</button>
+        <iframe id="shopIframe" style="display: none"></iframe>
+        <div
+          id="widgetContainer"
+          style="display: none; height: 100%; overflow: auto"
+        >
+          <script
+            src="https://static.elfsight.com/platform/platform.js"
+            async
+          ></script>
+          <div
+            class="elfsight-app-2540c184-0568-4fc7-9098-3c9411ca4165"
+            data-elfsight-app-lazy
+          ></div>
+        </div>
+        <div id="shopFallbackMessage" class="shop-fallback-msg" style="display: none">
+          This store cannot be viewed inside the app. Opening it in a new tab.
+        </div>
+      </div>
+    </section>
+
+      <!-- Footer -->
+
+        <footer class="footer">
+          <div class="footer-container">
+            <div class="logo">
+              <img src="/img/kidbank-logo1.png" alt="logo-img">
+            </div>
+            
+            <div class="members">
+              <div class="members-title">
+                <div>Meet our team!</div>
+                <div>Check out our GitHub profiles!</div>
+              </div>
+
+              <div class="members-links">
+                <span
+                  onclick="showMember('img/renate.png', 'Renate', 'Frontend Developer', 'https://github.com/03-renate')" alt="Profile picture of Renate"
+                  ><i class="fab fa-github"></i> 
+                  Renate
+                </span>
+                <span
+                  onclick="showMember('img/renate.png', 'Tubha', 'Frontend Developer', 'https://github.com/Tubhaahmad')" alt="Profile picture of Toubha"
+                  ><i class="fab fa-github"></i>Tubha
+                </span>
+                <span
+                  onclick="showMember('img/sergiu.png','Sergiu', 'Frontend Developer', 'https://github.com/sergiu-sa')" alt="Profile picture of Sergiu"
+                  ><i class="fab fa-github"></i>
+                  Sergiu
+                </span>
+                <span
+                  onclick="showMember('img/hammad-image.png', 'Hammad', 'Frontend Developer', 'https://github.com/Hammadniazi')" alt="Profile picture of Hammad"
+                  ><i class="fab fa-github"></i>
+                  Hammad
+                </span>
+              </div>
+            </div>
+          </div>
+        </footer>
+
+        <!-- Pop-up -->
+
+        <div id="pop-up-member" class="pop-up">
+          <div class="pop-up-content">
+            <span class="close-btn" id="close-btn">&times;</span>
+            <img id="memberImage" src="" alt="Member Image" class="memberImage">
+            <h2 id="memberName"></h2>
+            <p id="memberRole"></p>
+            <a id="memberGithub" href="#" target="_blank">Visit GitHub</a>
+          </div>
+        </div>
+      </main>
+
+      <!-- Bottom Navigation for Mobile -->
+      <div class="bottom-nav">
+        <a href="#" class="bottom-nav-item active">
+          <i class="fas fa-home"></i>
+          <span>Home</span>
+        </a>
+        <a href="#" class="bottom-nav-item">
+          <i class="fas fa-wallet"></i>
+          <span>Wallet</span>
+        </a>
+        <a href="#" class="bottom-nav-item pay-btn">
+          <div class="pay-btn-circle">
+            <i class="fas fa-paper-plane"></i>
+          </div>
+        </a>
+        <a href="#" class="bottom-nav-item">
+          <i class="fas fa-chart-pie"></i>
+          <span>Budget</span>
+        </a>
+        <a href="#" class="bottom-nav-item">
+          <i class="fas fa-book"></i>
+          <span>Learn</span>
+        </a>
+      </div>
+    </div>
+  </body>
+</html>
