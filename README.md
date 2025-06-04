@@ -6,7 +6,7 @@ KidBank is a responsive web-based financial app designed for teens aged 14–18.
 
 Originally built as a team project, the code is now maintained and expanded by Sergiu Sarbu.
 
-**Repository:** [github.com/sergiu-sa/kid_bank_02](https://github.com/sergiu-sa/kid_bank_02)
+**Repository:** [github.com/sergiu-sa/kid_bank_02](https://github.com/sergiu-sa/kid_bank_.git)
 
 ---
 
@@ -39,7 +39,7 @@ Originally built as a team project, the code is now maintained and expanded by S
 ### Installation
 
 ```bash
-git clone https://github.com/sergiu-sa/kid_bank_02.git
+git clone https://github.com/sergiu-sa/kid_bank_.git
 cd kid_bank_02
 npm install
 npm run dev
@@ -94,8 +94,3 @@ netlify deploy --prod
 This project is open-source and available for educational use.
 
 ---
-
-## Contact
-
-For questions or feedback, open an issue at  
-[github.com/sergiu-sa/kid_bank_02/issues](https://github.com/sergiu-sa/kid_bank_02/issues)
