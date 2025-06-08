@@ -1,12 +1,19 @@
 # KidBank – Financial Tool for Teens
 
-## Overview
+## Project Overview
 
-KidBank is a responsive web-based financial app designed for teens aged 14–18. It allows users to manage their balance, view transaction history, and scan products before purchasing. Age-restricted items (like alcohol or energy drinks) are flagged and blocked.
+Kid Bank is a web-based financial application designed to help teenagers aged 14–18 manage money in a safe and responsible way. The app includes age-based restrictions for purchases and teaches basic financial literacy through real use scenarios.
 
-Originally built as a team project, the code is now maintained and expanded by Sergiu Sarbu.
+This project was developed as part of a first-year team assignment at Noroff’s Front-End Development program. We worked collaboratively to define features, divide tasks, and deploy a functional MVP that integrates barcode scanning and product validation using the Open Food Facts API.
 
-**Repository:** [github.com/sergiu-sa/kid_bank_02](https://github.com/sergiu-sa/kid_bank_.git)
+The application simulates a purchase process where teenagers can scan barcodes, check product eligibility based on age, and generate a QR code to complete a purchase.
+
+---
+
+## Links
+
+- Live Site: [https://kidbank.vercel.app](https://kidbank.vercel.app)
+- GitHub Repo: [https://github.com/sergiu-sa/kid_bank_02](https://github.com/sergiu-sa/kid_bank_02)
 
 ---
 
@@ -20,12 +27,38 @@ Originally built as a team project, the code is now maintained and expanded by S
 
 ---
 
+## Screenshot
+
+![Kid Bank Screenshot](./assets/screenshots/kidbank-preview.png)  
+_Replace with correct path if your screenshot is saved elsewhere._
+
+---
+
 ## Tech Stack
 
 - HTML, CSS, JavaScript (Vite)
 - Node.js (Netlify Functions + Axios)
 - Open Food Facts API
 - GitHub for version control
+
+---
+
+## My Role
+
+In this team assignment, I was responsible for:
+
+- Implementing the barcode scanner feature using the Open Food Facts API
+- Creating a Node.js proxy server to overcome CORS/browser limitations
+- Building the navigation
+- Designing and coding the online shop layout
+- Structuring the site and setting up the initial codebase in Vite
+
+Team Members:
+
+- Renate – Team Manager
+- Thuba – Design Manager
+- Hamad – Task Operator
+- Sergiu Sarbu – Developer / Strategist
 
 ---
 
