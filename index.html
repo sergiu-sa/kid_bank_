@@ -12,7 +12,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap"
       rel="stylesheet"
     />
     <script type="module" src="/src/js/main.js" defer></script>
@@ -84,16 +84,21 @@
           <!-- CARD INFORMATION -->
           <article class="hero-right">
             <div class="card-header">
-              <p>Your Balance:</p>
+              <p>Available balance</p>
               <button class="card-icon" aria-label="Toggle balance visibility">
                 <i class="fas fa-eye" aria-hidden="true"></i>
               </button>
             </div>
-            
+
             <div class="balance-amount">
               <div id="blurred-currency" class="currency">
                 <h1 id="re_balance">$0.00</h1>
               </div>
+            </div>
+
+            <div class="account-meta">
+              <span>•••• 7842 · KidBank Pocket</span>
+              <strong>USD</strong>
             </div>
           </article>
 
@@ -122,15 +127,21 @@
         <section class="transactions-monthly-overview-container">
           <section class="recent-transactions">
             <div class="section-header">
-              <h2>recent-transactions</h2>
+              <div>
+                <span class="eyebrow">Activity</span>
+                <h2>Recent <em>moves</em></h2>
+              </div>
             </div>
 
-            <div id="js-transactions"></div>        
+            <div id="js-transactions"></div>
           </section>
 
           <section class="monthly-overview">
             <div class="section-header">
-              <h2>Monthly Overview</h2>
+              <div>
+                <span class="eyebrow">This month</span>
+                <h2>Where it goes</h2>
+              </div>
             </div>
             <div class="monthly-overview-card">
               <div class="card-side front">
@@ -181,8 +192,11 @@
         <!-- Spending Categories -->
         <section class="spending-categories">
           <div class="section-header">
-            <h2>This Month's Spending</h2>
-            <a href="#" class="view-all">View All</a>
+            <div>
+              <span class="eyebrow">Budgets</span>
+              <h2>How you’re <em>spending</em></h2>
+            </div>
+            <a href="#" class="view-all">View all →</a>
           </div>
           <div class="category-list">
             <div class="category-card">
@@ -225,10 +239,13 @@
         </section>
 
         <!-- Assign Tasks -->
-        <section>
+        <section class="tasks-section">
           <div class="section-header">
-            <h2>Your Tasks</h2>
-            <a href="#" class="view-all">View All</a>
+            <div>
+              <span class="eyebrow">Earn</span>
+              <h2>Your <em>chores</em></h2>
+            </div>
+            <a href="#" class="view-all">View all →</a>
           </div>
           <div class="task-list">
             <div class="task-card">
@@ -277,7 +294,10 @@
         <!-- Savings Goals -->
         <section class="savings-section">
           <div class="section-header">
-            <h2>Savings Goals</h2>
+            <div>
+              <span class="eyebrow">Stash</span>
+              <h2>Saving <em>up for…</em></h2>
+            </div>
           </div>
           <div class="goals-list" id="goalsList"></div>
         </section>
@@ -285,7 +305,8 @@
         <!-- Online Shop Section -->
        <section class="store-section">
       <div class="store-header">
-        <h2>Shop Online</h2>
+        <span class="eyebrow">Marketplace</span>
+        <h2>Shop</h2>
       </div>
       <div class="add-shop-form">
         <input
@@ -353,8 +374,8 @@
             
             <div class="members">
               <div class="members-title">
-                <div>Meet our team!</div>
-                <div>Check out our GitHub profiles!</div>
+                <div>Meet the team</div>
+                <div>Built by four humans · Find us on GitHub</div>
               </div>
 
               <div class="members-links">

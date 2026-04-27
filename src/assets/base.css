@@ -1,57 +1,266 @@
-/* Base Styles */
-* {
+/* ============================================================
+   KidBank — Design System
+   Editorial neobank: warm cream, deep teal, italic serif accents
+   ============================================================ */
+
+:root {
+  /* Surface */
+  --cream: #f3ede0;
+  --cream-2: #ebe3d2;
+  --surface: #ffffff;
+  --surface-2: #fbf6ec;
+
+  /* Ink */
+  --ink: #0e1419;
+  --ink-muted: #4a5862;
+  --ink-subtle: #8c99a4;
+
+  /* Brand */
+  --brand-deep: #002b36;
+  --brand: #00606e;
+  --brand-soft: #94d2bd;
+  --brand-mint: #c8e7d8;
+
+  /* Accents */
+  --accent: #ff8a1f;
+  --accent-soft: #ffe9c7;
+  --highlight: #ffe864;
+  --success: #1f8a5a;
+  --danger: #c1284a;
+
+  /* Lines */
+  --line: rgba(14, 20, 25, 0.08);
+  --line-strong: rgba(14, 20, 25, 0.16);
+  --line-on-dark: rgba(255, 255, 255, 0.14);
+
+  /* Shadow */
+  --shadow-sm: 0 1px 2px rgba(14, 20, 25, 0.06);
+  --shadow-md: 0 8px 24px -10px rgba(14, 20, 25, 0.18);
+  --shadow-lg: 0 24px 60px -20px rgba(0, 43, 54, 0.35);
+
+  /* Radii */
+  --r-xs: 6px;
+  --r-sm: 10px;
+  --r-md: 16px;
+  --r-lg: 22px;
+  --r-xl: 28px;
+  --r-pill: 999px;
+
+  /* Spacing scale */
+  --s-1: 4px;
+  --s-2: 8px;
+  --s-3: 12px;
+  --s-4: 16px;
+  --s-5: 20px;
+  --s-6: 24px;
+  --s-7: 32px;
+  --s-8: 40px;
+  --s-9: 56px;
+  --s-10: 80px;
+
+  /* Typography */
+  --font-display: "Geist", "Inter Tight", system-ui, sans-serif;
+  --font-body: "Geist", "Inter Tight", system-ui, sans-serif;
+  --font-serif: "Instrument Serif", "Times New Roman", serif;
+  --font-mono: "Geist Mono", ui-monospace, "SF Mono", monospace;
+
+  --h1-size: clamp(2.4rem, 4.4vw, 3.6rem);
+  --h2-size: clamp(1.4rem, 1.8vw, 1.7rem);
+  --h3-size: 1.05rem;
+  --display-balance: clamp(2.6rem, 6.4vw, 4.6rem);
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --ease-spring: cubic-bezier(0.5, 1.4, 0.5, 1);
+  --t-fast: 160ms;
+  --t-med: 280ms;
+  --t-slow: 480ms;
+
+  /* Legacy tokens still referenced elsewhere (keep stable) */
+  --bg-color: var(--cream);
+  --container-color: var(--surface);
+  --text-dark: var(--ink);
+  --text-light: var(--ink-subtle);
+  --refreshments-color: var(--brand-soft);
+  --gift-color: var(--brand);
+  --clothing-color: #b3cea3;
+  --error-color: var(--danger);
+  --success-color: var(--success);
+  --h2-color: var(--ink);
+  --h3-color: var(--ink);
+  --h4-color: var(--ink);
+  --p-size-small: 0.85rem;
+  --p-size-medium: 1rem;
+  --p-size-large: 1.4rem;
+  --view-all-size: 0.85rem;
+  --span-size-s: 0.9rem;
+  --span-size-m: 1.1rem;
+  --border-radius-containers: var(--r-md);
+  --nav-icon-after-hover: var(--brand);
+}
+
+/* Reset */
+*,
+*::before,
+*::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-:root {
-  --h1-size: 1.8rem;
-  --h2-size: 1.2rem;
-  --h3-size: 1rem;
-  --h4-size: 1.2rem;
-  --h5-size: 1.2rem;
-
-  --p-size-small: 0.85rem;
-  --p-size-medium: 1rem;
-  --p-size-large: 1.5rem;
-  --view-all-size: 1rem;
-
-  --span-size-s: 0.85rem;
-  --span-size-m: 1.2rem;
-
-  --border-radius-containers: 10px;
-
-  --bg-color: #f9f9f9;
-  --container-color: #ffffff;
-
-  --nav-icon-before-hover: #002432;
-  --nav-icon-after-hover: #005f73;
-
-  --h2-color: #002432;
-  --h3-color: #002432;
-  --h4-color: #002432;
-
-  --refreshments-color: #94d2bd;
-  --gift-color: #005f73;
-  --clothing-color: #b3cea3;
-  --error-color: #ff396f;
-  --text-dark: #333333;
-  --text-light: #999999;
-  --success-color: #2dce89;
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
 body {
-  font-family: "Poppins", sans-serif;
-  background-color: var(--bg-color);
-  color: var(--text-dark);
-  line-height: 1.6;
+  font-family: var(--font-body);
+  font-feature-settings: "ss01", "cv11";
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--ink);
+  background-color: var(--cream);
+  background-image:
+    radial-gradient(1200px 800px at 110% -10%, rgba(255, 138, 31, 0.10), transparent 60%),
+    radial-gradient(900px 700px at -10% 110%, rgba(0, 96, 110, 0.08), transparent 60%);
+  background-attachment: fixed;
+  min-height: 100vh;
 }
 
+img {
+  max-width: 100%;
+  display: block;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  background: none;
+  border: 0;
+}
+
+input,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+h1 { font-size: var(--h1-size); line-height: 1.05; }
+h2 { font-size: var(--h2-size); line-height: 1.15; }
+h3 { font-size: var(--h3-size); line-height: 1.25; }
+
+/* Editorial italic accent — used inside headings: <h2>Latest <em>moves</em></h2> */
+h1 em, h2 em, h3 em,
+.serif-italic {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
+p {
+  color: var(--ink-muted);
+}
+
+::selection {
+  background: var(--ink);
+  color: var(--cream);
+}
+
+/* Utility — eyebrow label (small uppercase tag above section titles) */
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  font-family: var(--font-display);
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  margin-bottom: var(--s-2);
+}
+
+.eyebrow::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  display: inline-block;
+}
+
+.eyebrow.on-dark {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* Tabular numerals for money / counters */
+.num,
+.amount,
+.amount-spent,
+.balance-amount,
+#re_balance {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum", "ss01";
+}
+
+/* Application shell */
 .app-container {
   position: relative;
   min-height: 100vh;
-  padding-bottom: 70px; /* Space for bottom nav on mobile */
+  padding-bottom: 88px; /* room for mobile bottom nav */
 }
 
+/* Focus ring — consistent across the app */
+:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
 
+/* Page-load reveal — staggered via inline animation-delay */
+@keyframes rise-in {
+  from { opacity: 0; transform: translate3d(0, 14px, 0); }
+  to   { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+
+.main-content > section,
+.main-content > div {
+  animation: rise-in 0.7s var(--ease-out) both;
+}
+.main-content > section:nth-child(1) { animation-delay: 0.02s; }
+.main-content > section:nth-child(2) { animation-delay: 0.08s; }
+.main-content > section:nth-child(3) { animation-delay: 0.14s; }
+.main-content > section:nth-child(4) { animation-delay: 0.20s; }
+.main-content > section:nth-child(5) { animation-delay: 0.26s; }
+.main-content > section:nth-child(6) { animation-delay: 0.32s; }
+.main-content > section:nth-child(7) { animation-delay: 0.38s; }
+.main-content > section:nth-child(8) { animation-delay: 0.44s; }
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

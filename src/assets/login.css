@@ -1,168 +1,314 @@
-/* Login Page */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Poppins", sans-serif;
-}
+/* ============================================================
+   Login — editorial split-screen
+   Left: dark brand pane with serif italic headline
+   Right: clean form
+   ============================================================ */
+
+@import url("./base.css");
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
 body {
-  background: #f4f4f4;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  font-family: var(--font-body);
+  font-size: 15px;
+  color: var(--ink);
+  background: var(--cream);
   min-height: 100vh;
-  padding: 20px;
-  color: #333;
-}
-
-.container {
-  background-color: white;
-  border-radius: 16px;
-  box-shadow: 0 15px 35px rgba(37, 117, 252, 0.2);
-  width: 100%;
-  max-width: 450px;
-  padding: 35px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   position: relative;
-  overflow: hidden;
 }
 
+@media (max-width: 880px) {
+  body { grid-template-columns: 1fr; }
+}
+
+/* Left pane — brand stage (decorative) */
+body::before {
+  content: "";
+  background: var(--brand-deep);
+  background-image:
+    radial-gradient(70% 90% at 100% 0%, rgba(255,138,31,0.28), transparent 60%),
+    radial-gradient(60% 80% at 0% 100%, rgba(148,210,189,0.22), transparent 60%);
+  position: relative;
+  z-index: 0;
+  display: block;
+}
+
+@media (max-width: 880px) {
+  body::before { display: none; }
+}
+
+/* Editorial overlay on the left pane */
+body::after {
+  content: "KidBank — pocket money, properly.";
+  position: fixed;
+  left: clamp(28px, 4vw, 64px);
+  top: clamp(28px, 5vh, 72px);
+  width: calc(50% - 100px);
+  max-width: 520px;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(2.4rem, 5vw, 4rem);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: #fff;
+  z-index: 1;
+  pointer-events: none;
+}
+
+@media (max-width: 880px) { body::after { display: none; } }
+
+/* Decorative ticker lines on left pane */
+.left-meta {
+  position: fixed;
+  left: clamp(28px, 4vw, 64px);
+  bottom: clamp(28px, 5vh, 56px);
+  width: calc(50% - 100px);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-family: var(--font-mono, monospace);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  color: rgba(255,255,255,0.55);
+  z-index: 1;
+}
+
+.left-meta div {
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  padding-top: 6px;
+}
+
+@media (max-width: 880px) { .left-meta { display: none; } }
+
+/* Right pane — form */
+.container {
+  background: var(--surface);
+  width: 100%;
+  max-width: 460px;
+  padding: clamp(28px, 4vw, 48px);
+  margin: auto;
+  border-radius: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 100vh;
+  position: relative;
+  border-left: 1px solid var(--line);
+}
+
+@media (max-width: 880px) {
+  body { display: block; padding: 24px; }
+  .container {
+    background: var(--surface);
+    border-radius: var(--r-xl);
+    margin: 0 auto;
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow-md);
+    min-height: auto;
+    padding: 32px;
+  }
+}
+
+.container::before {
+  content: "KIDBANK";
+  display: block;
+  font-family: var(--font-display);
+  font-size: 0.72rem;
+  letter-spacing: 0.32em;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 32px;
+}
+
+.container::before {
+  position: relative;
+}
+
+/* Toggle Kid / Parent */
 .toggle-buttons {
   display: flex;
-  margin-bottom: 25px;
-  background-color: #f0f4f8;
-  border-radius: 10px;
-  padding: 5px;
+  margin-bottom: 28px;
+  background: var(--cream);
+  border-radius: var(--r-pill);
+  padding: 4px;
+  border: 1px solid var(--line);
 }
 
 .toggle-btn {
   flex: 1;
-  padding: 12px;
-  background-color: #00000017;
-  border: none;
-  border-radius: 8px;
+  padding: 11px 16px;
+  background: transparent;
+  border: 0;
+  border-radius: var(--r-pill);
   cursor: pointer;
-  transition: all 0.3s ease;
-  font-weight: 600;
-  color: #5a6b7c;
-  position: relative;
-  z-index: 2;
+  transition: background var(--t-fast) var(--ease-out),
+              color var(--t-fast) var(--ease-out);
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 0.88rem;
+  color: var(--ink-muted);
 }
 
 .toggle-btn.active {
-  background: linear-gradient(-120deg, #ee9b00, #4a9998, #002432);
-
-  color: white;
-  box-shadow: 0 5px 15px rgba(106, 17, 203, 0.3);
+  background: var(--brand-deep);
+  color: #fff;
 }
 
-.form-section {
-  display: none;
-}
+/* Form sections */
+.form-section { display: none; }
+.form-section.active { display: block; animation: rise-in 0.4s var(--ease-out); }
 
-.form-section.active {
+.form-section::before {
+  content: "Welcome back";
   display: block;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1.7rem;
+  color: var(--ink);
+  margin-bottom: 24px;
+  line-height: 1.1;
 }
+
+#parent-login.form-section::before { content: "For grown-ups"; }
 
 .form-group {
-  margin-bottom: 20px;
-  position: relative;
+  margin-bottom: 16px;
 }
 
 .form-group label {
   display: block;
-  margin-bottom: 8px;
-  color: #2c3e50;
+  margin-bottom: 6px;
+  font-family: var(--font-display);
+  font-size: 0.74rem;
   font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--ink-muted);
 }
 
 .form-group input {
   width: 100%;
-  padding: 12px;
-  border: 2px solid #e0e6ed;
-  border-radius: 10px;
-  transition: all 0.3s ease;
-  background-color: #f7f9fc;
+  padding: 13px 14px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--r-md);
+  background: var(--surface-2);
+  font-size: 0.95rem;
+  transition: border-color var(--t-fast) var(--ease-out),
+              background var(--t-fast) var(--ease-out);
 }
 
 .form-group input:focus {
-  outline: none;
-  border-color: #005f73;
-  box-shadow: 0 0 0 3px rgba(106, 17, 203, 0.1);
+  outline: 0;
+  border-color: var(--brand);
+  background: var(--surface);
+  box-shadow: 0 0 0 4px rgba(0, 96, 110, 0.08);
 }
 
 .form-group .error-message {
-  color: #ff6b6b;
-  font-size: 0.8em;
-  margin-top: 5px;
+  color: var(--danger);
+  font-size: 0.78rem;
+  margin-top: 6px;
   display: none;
 }
 
 .submit-btn {
   width: 100%;
-  padding: 15px;
-  background: linear-gradient(-120deg, #ee9b00, #4a9998, #002432);
-
-  color: white;
-  border: none;
-  border-radius: 10px;
+  padding: 14px;
+  background: var(--brand-deep);
+  color: #fff;
+  border: 0;
+  border-radius: var(--r-md);
   cursor: pointer;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: background var(--t-fast) var(--ease-out),
+              transform var(--t-fast) var(--ease-out);
+  font-family: var(--font-display);
   font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 1px;
+  font-size: 0.95rem;
+  letter-spacing: 0;
+  text-transform: none;
+  margin-top: 8px;
 }
 
 .submit-btn:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 10px 20px rgba(106, 17, 203, 0.3);
+  background: var(--ink);
+  transform: translateY(-1px);
 }
 
 .switch-form {
   text-align: center;
-  margin-top: 20px;
-  color: #6c757d;
+  margin-top: 24px;
+  color: var(--ink-muted);
+  font-size: 0.88rem;
 }
 
 .switch-form a {
-  color: #005f73;
-  text-decoration: none;
-  font-weight: 600;
-  transition: color 0.3s ease;
+  color: var(--ink);
+  font-weight: 500;
+  border-bottom: 1px solid var(--line-strong);
+  transition: border-color var(--t-fast) var(--ease-out);
+  margin-left: 4px;
 }
 
 .switch-form a:hover {
-  color: #4a9998;
+  border-color: var(--accent);
+  color: var(--accent);
 }
 
+/* Pop-up registration */
 .pop {
   display: none;
   position: fixed;
   z-index: 1000;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-  background-color: rgba(0, 0, 0, 0.5);
+  inset: 0;
+  background: rgba(14, 20, 25, 0.6);
+  backdrop-filter: blur(6px);
   justify-content: center;
   align-items: center;
 }
 
 .pop-content {
-  background-color: white;
-  padding: 30px;
-  border-radius: 15px;
+  background: var(--surface);
+  padding: 32px;
+  border-radius: var(--r-xl);
   width: 90%;
-  max-width: 400px;
-  text-align: center;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  max-width: 420px;
+  text-align: left;
+  position: relative;
+  box-shadow: var(--shadow-lg);
+  animation: rise-in 0.4s var(--ease-spring);
+}
+
+.pop-content h2 {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 1.7rem;
+  margin-bottom: 18px;
 }
 
 .close-pop {
-  color: #aaa;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 1.4rem;
+  color: var(--ink-subtle);
   cursor: pointer;
+  background: transparent;
+  transition: background var(--t-fast) var(--ease-out),
+              color var(--t-fast) var(--ease-out);
+}
+
+.close-pop:hover {
+  background: var(--surface-2);
+  color: var(--ink);
 }

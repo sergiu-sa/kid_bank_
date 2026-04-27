@@ -1,68 +1,126 @@
-/* AssignTask*/
+/* Chores / Assignable tasks */
 
 .task-list {
   display: flex;
   flex-direction: column;
-  gap: 15px;
-  margin-bottom: 25px;
+  gap: 10px;
+  margin-bottom: 36px;
 }
+
 .task-card {
-  background-color: white;
-  border-radius: 12px;
-  padding: 15px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  padding: 14px 16px;
   display: flex;
   align-items: center;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-  transition: transform 0.2s;
+  gap: 14px;
+  transition: transform var(--t-fast) var(--ease-out),
+              border-color var(--t-fast) var(--ease-out);
 }
+
 .task-card:hover {
-  transform: translateY(-3px);
+  transform: translateX(2px);
+  border-color: var(--line-strong);
 }
 
 .checkbox-icon {
-  width: 50px;
-  height: 50px;
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-right: 15px;
-  font-size: 1.3rem;
-  color: white;
-  background-color: #5e72e4;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  font-size: 0.95rem;
+  color: var(--brand-deep);
+  background: var(--brand-mint);
+  flex-shrink: 0;
 }
 
-.checkbox-icon.color {
-  background-color: #94d2bd;
-}
+.checkbox-icon.color           { background: var(--brand-soft); color: var(--brand-deep); }
+.checkbox-icon.color-icon-trash { background: #d8e6c8; color: #36502a; }
+.checkbox-icon.color-icon-dishes { background: var(--accent-soft); color: var(--accent); }
+
 .task-info {
   flex: 1;
-  font-size: 0.9rem;
+  min-width: 0;
 }
-.task-info p {
-  font-size: 0.85rem;
-  color: #999;
-}
-.task-amount {
-  display: flex;
-  flex-direction: row;
-  text-align: right;
-}
-.amount {
+
+.task-info h3 {
+  font-family: var(--font-display);
   font-size: 0.95rem;
   font-weight: 500;
-  color: black;
-  padding-right: 0.5rem;
+  color: var(--ink);
+  margin-bottom: 2px;
 }
-.color-icon-trash {
-  background-color: #b3cea3;
+
+.task-info p {
+  font-size: 0.78rem;
+  color: var(--ink-subtle);
 }
-.color-icon-dishes {
-  background-color: #d1ca89;
+
+.task-amount {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-shrink: 0;
+}
+
+.amount {
+  font-family: var(--font-display);
+  font-feature-settings: "tnum";
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--accent);
+  background: var(--accent-soft);
+  border-radius: var(--r-pill);
+  padding: 4px 12px;
+}
+
+/* Custom checkbox — round, fills with brand color when checked */
+.task-amount label {
+  display: inline-grid;
+  place-items: center;
+  cursor: pointer;
+}
+
+.task-amount input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 1.5px solid var(--line-strong);
+  background: var(--surface);
+  cursor: pointer;
+  position: relative;
+  transition: background var(--t-fast) var(--ease-out),
+              border-color var(--t-fast) var(--ease-out),
+              transform var(--t-fast) var(--ease-spring);
+}
+
+.task-amount input[type="checkbox"]:hover {
+  border-color: var(--brand);
+}
+
+.task-amount input[type="checkbox"]:checked {
+  background: var(--brand-deep);
+  border-color: var(--brand-deep);
+  transform: scale(1.06);
+}
+
+.task-amount input[type="checkbox"]:checked::after {
+  content: "✓";
+  color: var(--accent);
+  font-size: 0.85rem;
+  font-weight: 700;
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
 }
 
 @media (max-width: 767px) {
-  .main-content {
-    margin-left: 0;
-  }
+  .main-content { margin-left: 0; }
+  .task-card { padding: 12px 14px; }
 }
