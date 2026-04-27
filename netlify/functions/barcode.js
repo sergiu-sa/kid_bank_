@@ -10,6 +10,13 @@ export async function handler(event) {
     };
   }
 
+  if (!/^\d{6,14}$/.test(code)) {
+    return {
+      statusCode: 400,
+      body: JSON.stringify({ error: "Invalid barcode format" }),
+    };
+  }
+
   const apiUrl = `https://world.openfoodfacts.org/api/v0/product/${code}.json`;
   console.log(`\u{1F4E3} Fetching: ${apiUrl}`);
 

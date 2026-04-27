@@ -20,15 +20,15 @@
   width: 50px; /* Ensure the width shrinks */
 }
 
-/* Hide the tyext when it colapsed */
+/* Hide the text when collapsed */
 .sidebar.collapsed .logo,
 .sidebar.collapsed .menu-item span,
 .sidebar.collapsed .user-profile {
   display: none;
 }
 
-/* Make menu icons center-alligned when collapsed */
-.sidebar.collapse .menu-item {
+/* Center menu icons when collapsed */
+.sidebar.collapsed .menu-item {
   justify-content: center;
   display: none;
   margin: 0;
@@ -56,26 +56,6 @@
 
 .sidebar.collapsed + .toggle-button .toggle-icon {
   transform: rotate(180deg);
-}
-
-/* Make menu icons center-alligned when collapsed */
-.sidebar.collapse .menu-item {
-  justify-content: center;
-  display: none;
-  margin: 0;
-}
-
-/* Toggle button */
-.toggle-button {
-  position: fixed;
-  top: 16px;
-  left: 16px;
-  background-color: white;
-  border: 1px solid #e1e4e8;
-  border-radius: 4px;
-  padding: 8px;
-  cursor: pointer;
-  transition: all 0.3s ease;
 }
 
 .sidebar-header {
@@ -191,7 +171,7 @@
   transition: transform 0.3s ease;
 }
 
-.sidebar:not(.colapsed) .toggle-icon {
+.sidebar:not(.collapsed) .toggle-icon {
   transform: rotate(180deg);
 }
 

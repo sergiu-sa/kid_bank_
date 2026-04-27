@@ -571,7 +571,7 @@
           JSON.stringify(allowedProducts)
         );
 
-        const checkoutURL = `https://k1dbank.netlify.app/checkout.html?products=${encodeURIComponent(
+        const checkoutURL = `${location.origin}/checkout.html?products=${encodeURIComponent(
           JSON.stringify(allowedProducts)
         )}`;
         qrContainer.innerHTML = `<h3>Scan this QR code to proceed to payment</h3>`;

@@ -7,6 +7,11 @@ app.use(cors());
 
 app.get("/barcode/:code", async (req, res) => {
   const barcode = req.params.code;
+
+  if (!/^\d{6,14}$/.test(barcode)) {
+    return res.status(400).json({ error: "Invalid barcode format" });
+  }
+
   const apiUrl = `https://world.openfoodfacts.org/api/v0/product/${barcode}.json`;
 
   console.log(`📡 Incoming request: ${req.method} ${req.url}`);

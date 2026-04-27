@@ -85,8 +85,8 @@
           <article class="hero-right">
             <div class="card-header">
               <p>Your Balance:</p>
-              <button onclick="hideShow()" class="card-icon">
-                <i class="fas fa-eye"></i>
+              <button class="card-icon" aria-label="Toggle balance visibility">
+                <i class="fas fa-eye" aria-hidden="true"></i>
               </button>
             </div>
             
@@ -104,8 +104,8 @@
               <span>Request</span>
             </button>
 
-            <a href="/public/barcode_scanner.html" class="action-btn pay" aria-label=" Scann barcodes">
-             <i class="fa-solid fa-barcode"></i></i>
+            <a href="/barcode_scanner.html" class="action-btn pay" aria-label="Scan barcodes">
+             <i class="fa-solid fa-barcode" aria-hidden="true"></i>
              <span class="scann_font">Scan</span>
             </a>
 
@@ -224,28 +224,6 @@
           </div>
         </section>
 
-        <!-- Restricted Purchase Modal -->
-        <div class="modal" id="restrictedModal">
-          <div class="modal-content">
-            <span class="close-modal">&times;</span>
-            <div class="modal-icon restricted">
-              <i class="fas fa-exclamation-triangle"></i>
-            </div>
-            <h2>Purchase Restricted</h2>
-            <p>
-              This purchase has been restricted because it falls into a category
-              that's not allowed for your account.
-            </p>
-            <p class="item-details">
-              Item: <span id="restrictedItem">Energy Drink</span>
-            </p>
-            <p class="restriction-reason">
-              Reason: <span id="restrictionReason">Age restricted product</span>
-            </p>
-            <button class="modal-btn close-btn">OK, I Understand</button>
-          </div>
-        </div>
-
         <!-- Assign Tasks -->
         <section>
           <div class="section-header">
@@ -294,6 +272,14 @@
               <label><input type="checkbox" /> </label>
             </div>
           </div>
+        </section>
+
+        <!-- Savings Goals -->
+        <section class="savings-section">
+          <div class="section-header">
+            <h2>Savings Goals</h2>
+          </div>
+          <div class="goals-list" id="goalsList"></div>
         </section>
 
         <!-- Online Shop Section -->
@@ -373,22 +359,38 @@
 
               <div class="members-links">
                 <span
-                  onclick="showMember('img/renate.png', 'Renate', 'Frontend Developer', 'https://github.com/03-renate')" alt="Profile picture of Renate"
-                  ><i class="fab fa-github"></i> 
+                  class="member-link"
+                  data-image="img/renate.png"
+                  data-name="Renate"
+                  data-role="Frontend Developer"
+                  data-github="https://github.com/03-renate"
+                  ><i class="fab fa-github" aria-hidden="true"></i>
                   Renate
                 </span>
                 <span
-                  onclick="showMember('img/renate.png', 'Tubha', 'Frontend Developer', 'https://github.com/Tubhaahmad')" alt="Profile picture of Toubha"
-                  ><i class="fab fa-github"></i>Tubha
+                  class="member-link"
+                  data-image="img/renate.png"
+                  data-name="Tubha"
+                  data-role="Frontend Developer"
+                  data-github="https://github.com/Tubhaahmad"
+                  ><i class="fab fa-github" aria-hidden="true"></i>Tubha
                 </span>
                 <span
-                  onclick="showMember('img/sergiu.png','Sergiu', 'Frontend Developer', 'https://github.com/sergiu-sa')" alt="Profile picture of Sergiu"
-                  ><i class="fab fa-github"></i>
+                  class="member-link"
+                  data-image="img/sergiu.png"
+                  data-name="Sergiu"
+                  data-role="Frontend Developer"
+                  data-github="https://github.com/sergiu-sa"
+                  ><i class="fab fa-github" aria-hidden="true"></i>
                   Sergiu
                 </span>
                 <span
-                  onclick="showMember('img/hammad-image.png', 'Hammad', 'Frontend Developer', 'https://github.com/Hammadniazi')" alt="Profile picture of Hammad"
-                  ><i class="fab fa-github"></i>
+                  class="member-link"
+                  data-image="img/hammad-image.png"
+                  data-name="Hammad"
+                  data-role="Frontend Developer"
+                  data-github="https://github.com/Hammadniazi"
+                  ><i class="fab fa-github" aria-hidden="true"></i>
                   Hammad
                 </span>
               </div>

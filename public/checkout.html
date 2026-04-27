@@ -64,22 +64,24 @@
         const productsParam = params.get("products");
         const products = JSON.parse(decodeURIComponent(productsParam));
 
-        if (!products || products.length === 0) {
-          productListContainer.innerHTML = "<p>No products scanned.</p>";
+        if (!Array.isArray(products) || products.length === 0) {
+          productListContainer.textContent = "No products scanned.";
         } else {
           products.forEach((product) => {
             const item = document.createElement("div");
             item.className = "product";
-            item.innerHTML = `
-              <span>${product.name}</span>
-              <strong>✅ Allowed</strong>
-            `;
+            const name = document.createElement("span");
+            name.textContent = product.name ?? "Unknown product";
+            const status = document.createElement("strong");
+            status.textContent = "✅ Allowed";
+            item.appendChild(name);
+            item.appendChild(status);
             productListContainer.appendChild(item);
           });
         }
       } catch (e) {
-        productListContainer.innerHTML =
-          "<p>⚠️ Error reading product list from QR code.</p>";
+        productListContainer.textContent =
+          "⚠️ Error reading product list from QR code.";
       }
     </script>
   </body>

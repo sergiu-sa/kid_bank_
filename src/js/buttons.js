@@ -1,20 +1,17 @@
-//Renate - Hero; eye-icon-btn
-let currencyDiv = document.getElementById("blurred-currency");
-let isBlurred = false;
-let icon = document.querySelector(".card-icon i");
+// Renate - Hero balance show/hide toggle
+const balanceBlur = document.getElementById("blurred-currency");
+const eyeButton = document.querySelector(".card-icon");
 
-function hideShow() {
-  if (isBlurred) {
-    currencyDiv.style.filter = "none";
-    switchIcon();
-  } else {
-    currencyDiv.style.filter = "blur(1.5rem)";
-    switchIcon();
-  }
-  isBlurred = !isBlurred;
-}
+if (balanceBlur && eyeButton) {
+  const eyeIcon = eyeButton.querySelector("i");
+  let isBlurred = false;
 
-function switchIcon() {
-  icon.classList.toggle("fa-eye");
-  icon.classList.toggle("fa-eye-slash");
+  eyeButton.addEventListener("click", () => {
+    isBlurred = !isBlurred;
+    balanceBlur.style.filter = isBlurred ? "blur(1.5rem)" : "none";
+    if (eyeIcon) {
+      eyeIcon.classList.toggle("fa-eye");
+      eyeIcon.classList.toggle("fa-eye-slash");
+    }
+  });
 }

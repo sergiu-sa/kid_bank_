@@ -405,28 +405,8 @@ body {
   width: 50px; /* Ensure the width shrinks */
 }
 
-/* Make menu icons center-alligned when collapsed */
-.sidebar.collapse .menu-item {
-  justify-content: center;
-  display: none;
-  margin: 0;
-}
-
-/* Toggle button */
-.toggle-button {
-  position: fixed;
-  top: 16px;
-  left: 16px;
-  background-color: white;
-  border: 1px solid #e1e4e8;
-  border-radius: 4px;
-  padding: 8px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-/* Make menu icons center-alligned when collapsed */
-.sidebar.collapse .menu-item {
+/* Make menu icons center-aligned when collapsed */
+.sidebar.collapsed .menu-item {
   justify-content: center;
   display: none;
   margin: 0;
@@ -552,7 +532,7 @@ body {
   transition: transform 0.3s ease;
 }
 
-.sidebar:not(.colapsed) .toggle-icon {
+.sidebar:not(.collapsed) .toggle-icon {
   transform: rotate(180deg);
 }
 
@@ -849,10 +829,6 @@ body {
 
 .transaction-icon.restricted {
   background-color: #005f73;
-}
-
-.transaction-icon.allowance {
-  background-color: #4a9998;
 }
 
 .transaction-info {
@@ -1204,3 +1180,73 @@ h4 {
   margin-top: 15px;
 }
 
+/* Savings Goals */
+.savings-section {
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.goals-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 15px;
+}
+
+.goals-list:empty::before {
+  content: "No savings goals yet — tap the Savings button above to add one.";
+  display: block;
+  color: var(--text-light);
+  font-size: var(--p-size-small);
+  padding: 10px 0;
+}
+
+.goal-card {
+  background-color: var(--container-color);
+  border-radius: var(--border-radius-containers);
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.goal-card:hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.goal-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 15px;
+  font-size: 1.3rem;
+  color: white;
+  background-color: #ee9b00;
+  flex-shrink: 0;
+}
+
+.goal-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.goal-info h3 {
+  font-size: var(--h3-size);
+  margin-bottom: 5px;
+  color: #002432;
+  word-break: break-word;
+}
+
+.goal-info p {
+  font-size: var(--p-size-small);
+  color: #666;
+}
+
+.goal-info .of-target {
+  color: #999;
+}

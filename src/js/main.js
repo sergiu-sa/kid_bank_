@@ -1,55 +1,28 @@
 // DOM Elements
+import { addTransaction as pushTransaction } from "./recentTransactions.js";
 
-const restrictedModal = document.getElementById("restrictedModal");
-const closeModal = document.querySelector(".close-modal");
-const closeBtn = document.querySelector(".close-btn");
-const testButtons = document.querySelectorAll(".test-btn");
-const restrictedItem = document.getElementById("restrictedItem");
-const restrictionReason = document.getElementById("restrictionReason");
 const sidebar = document.getElementById("sidebar");
 const toggleButton = document.getElementById("toggleSidebar");
-const bodyElement = document.body;
-
 const taskCards = document.querySelectorAll(".task-card");
 
-//Navigation
-
-// Set initial state - expanded on desktop
-if (window.innerWidth > 768) {
+// Navigation: sidebar collapse toggle (desktop only)
+if (sidebar && window.innerWidth > 768) {
   sidebar.classList.remove("collapsed");
 }
 
-toggleButton.addEventListener("click", () => {
-  if (window.innerWidth > 768) {
-    sidebar.classList.toggle("collapsed");
+if (toggleButton && sidebar) {
+  toggleButton.addEventListener("click", () => {
+    if (window.innerWidth > 768) {
+      sidebar.classList.toggle("collapsed");
+      const icon = toggleButton.querySelector(".toggle-icon");
+      if (icon) icon.classList.toggle("rotated");
+    }
+  });
+}
 
-    // Rotate the icon
-    const icon = toggleButton.querySelector(".toggle-icon");
-    icon.classList.toggle("rotated");
-  }
-});
-
-// Check window size on resize
 window.addEventListener("resize", () => {
-  if (window.innerWidth <= 768) {
-    // Reset desktop classes when switching to mobile
+  if (sidebar && window.innerWidth <= 768) {
     sidebar.classList.remove("collapsed");
-  }
-});
-
-// Close modal when clicking X or OK button
-closeModal.addEventListener("click", () => {
-  restrictedModal.style.display = "none";
-});
-
-closeBtn.addEventListener("click", () => {
-  restrictedModal.style.display = "none";
-});
-
-// Close modal when clicking outside of it
-window.addEventListener("click", (e) => {
-  if (e.target === restrictedModal) {
-    restrictedModal.style.display = "none";
   }
 });
 
@@ -230,85 +203,35 @@ function showNotification(message, type = "info") {
   }, 3000);
 }
 
-// Update balance (simulation)
-function updateBalance(amount) {
-  const balanceElement = document.querySelector(".balance-amount .amount");
-  const currentBalance = parseFloat(balanceElement.textContent);
-  const newBalance = (currentBalance + parseFloat(amount)).toFixed(2);
-
-  // Animate the balance change
-  animateValue(balanceElement, currentBalance, newBalance, 500);
+// Read the current balance from the dashboard's balance node.
+function readBalance() {
+  const el = document.getElementById("re_balance");
+  if (!el) return { value: 0, element: null };
+  const numeric = parseFloat(el.textContent.replace(/[^\d.-]/g, ""));
+  return { value: Number.isFinite(numeric) ? numeric : 0, element: el };
 }
 
-// Animate value change
-function animateValue(element, start, end, duration) {
+// Update balance — animates from current to current+amount.
+function updateBalance(amount) {
+  const { value: current, element } = readBalance();
+  if (!element) return;
+  const delta = parseFloat(amount);
+  if (!Number.isFinite(delta)) return;
+  animateBalance(element, current, current + delta, 500);
+}
+
+function animateBalance(element, start, end, duration) {
   let startTimestamp = null;
   const step = (timestamp) => {
     if (!startTimestamp) startTimestamp = timestamp;
     const progress = Math.min((timestamp - startTimestamp) / duration, 1);
     const value = progress * (end - start) + start;
-    element.textContent = value.toFixed(2);
+    element.textContent = `$${value.toFixed(2)}`;
     if (progress < 1) {
       window.requestAnimationFrame(step);
     }
   };
   window.requestAnimationFrame(step);
-}
-
-// Add transaction to list (simulation)
-function addTransaction(name, category, amount) {
-  const transactionList = document.querySelector(".transaction-list");
-  const newTransaction = document.createElement("div");
-  newTransaction.className = "transaction-card";
-
-  // Set icon based on category
-  let iconClass = "fas fa-shopping-bag";
-  let iconColorClass = "";
-
-  if (category === "Food") {
-    iconClass = "fas fa-utensils";
-    iconColorClass = "starbucks";
-  } else if (category === "Entertainment") {
-    iconClass = "fas fa-film";
-    iconColorClass = "spotify";
-  } else if (category === "Electronics") {
-    iconClass = "fas fa-laptop";
-    iconColorClass = "";
-  }
-
-  // Create transaction HTML
-  newTransaction.innerHTML = `
-        <div class="transaction-icon ${
-          iconColorClass || category.toLowerCase()
-        }">
-            <i class="${iconClass}"></i>
-        </div>
-        <div class="transaction-info">
-            <h3>${name}</h3>
-            <p>${category}</p>
-        </div>
-        <div class="transaction-amount">
-            <p class="amount-spent">-$${parseFloat(amount).toFixed(2)}</p>
-            <p class="transaction-date">Just now</p>
-        </div>
-    `;
-
-  // Add transaction to the top of the list
-  transactionList.insertBefore(newTransaction, transactionList.firstChild);
-
-  // Highlight the new transaction
-  newTransaction.style.animation = "fadeIn 0.5s";
-
-  const transactions = JSON.parse(localStorage.getItem("transactions") || "[]");
-  transactions.unshift({
-    title: name,
-    description: category,
-    category: category.toLowerCase(),
-    amount: parseFloat(amount),
-    date: new Date().toISOString().split("T")[0],
-    ageLimit: 0,
-  });
-  localStorage.setItem("transactions", JSON.stringify(transactions));
 }
 
 // Add CSS for fade-in animation
@@ -436,45 +359,16 @@ document
       setTimeout(() => {
         showNotification("Your parent approved your request!", "success");
 
-        // Add transaction
-        const transactionList = document.querySelector(".transaction-list");
-        const newTransaction = document.createElement("div");
-        newTransaction.className = "transaction-card";
-
-        newTransaction.innerHTML = `
-                <div class="transaction-icon allowance">
-                    <i class="fas fa-gift"></i>
-                </div>
-                <div class="transaction-info">
-                    <h3>Money Added</h3>
-                    <p>From Parent</p>
-                </div>
-                <div class="transaction-amount positive">
-                    <p class="amount-received">+$${parseFloat(amount).toFixed(
-                      2
-                    )}</p>
-                    <p class="transaction-date">Just now</p>
-                </div>
-            `;
-
-        // Add transaction to the top of the list
-        transactionList.insertBefore(
-          newTransaction,
-          transactionList.firstChild
-        );
-
-        const transactions = JSON.parse(localStorage.getItem("transactions") || "[]");
-        transactions.unshift({
+        pushTransaction({
           title: "Money Added",
           description: "From Parent",
           category: "gift",
           amount: parseFloat(amount),
           date: new Date().toISOString().split("T")[0],
           ageLimit: 0,
+          positive: true,
         });
-        localStorage.setItem("transactions", JSON.stringify(transactions));
 
-        // Update balance
         updateBalance(amount);
       }, 3000);
     });
@@ -645,28 +539,45 @@ document.querySelector(".add-goal").addEventListener("click", () => {
 // Function to add a new savings goal
 function addSavingsGoal(name, targetAmount, iconClass, savedAmount = 0, save = true) {
   const goalsList = document.querySelector(".goals-list");
+  if (!goalsList) return;
+
   const newGoal = document.createElement("div");
   newGoal.className = "goal-card";
-  const percentage = (savedAmount / targetAmount) * 100;
+  const percentage = Math.min((savedAmount / targetAmount) * 100, 100);
 
-  newGoal.innerHTML = `
-        <div class="goal-icon">
-            <i class="${iconClass}"></i>
-        </div>
-        <div class="goal-info">
-            <h3>${name}</h3>
-            <div class="progress-bar">
-                <div class="progress" style="width: ${percentage}%"></div>
-            </div>
-            <p>$${savedAmount.toFixed(
-              2
-            )} <span class="of-target">of $${parseFloat(targetAmount).toFixed(
-    2
-  )}</span></p>
-        </div>
-    `;
+  // Build with DOM APIs so user-entered `name` can't inject HTML.
+  const iconWrap = document.createElement("div");
+  iconWrap.className = "goal-icon";
+  const iconEl = document.createElement("i");
+  iconEl.className = iconClass; // iconClass comes from a fixed picker
+  iconWrap.appendChild(iconEl);
 
-  // Add goal to the list
+  const info = document.createElement("div");
+  info.className = "goal-info";
+
+  const heading = document.createElement("h3");
+  heading.textContent = name;
+
+  const progressBar = document.createElement("div");
+  progressBar.className = "progress-bar";
+  const progressFill = document.createElement("div");
+  progressFill.className = "progress";
+  progressFill.style.width = `${percentage}%`;
+  progressBar.appendChild(progressFill);
+
+  const summary = document.createElement("p");
+  summary.textContent = `$${parseFloat(savedAmount).toFixed(2)} `;
+  const ofTarget = document.createElement("span");
+  ofTarget.className = "of-target";
+  ofTarget.textContent = `of $${parseFloat(targetAmount).toFixed(2)}`;
+  summary.appendChild(ofTarget);
+
+  info.appendChild(heading);
+  info.appendChild(progressBar);
+  info.appendChild(summary);
+
+  newGoal.appendChild(iconWrap);
+  newGoal.appendChild(info);
   goalsList.appendChild(newGoal);
 
   if (save) {
@@ -716,10 +627,8 @@ function showAddToGoalModal(
             <div class="modal-icon" style="background-color: #EE9B00;">
                 <i class="fas fa-piggy-bank"></i>
             </div>
-            <h2>Add to "${goalName}"</h2>
-            <p>Current progress: $${currentAmount.toFixed(2)} of $${parseFloat(
-    targetAmount
-  ).toFixed(2)}</p>
+            <h2></h2>
+            <p class="goal-progress-line"></p>
             <div class="form-group">
                 <label for="addAmount">How much would you like to add?</label>
                 <input type="number" id="addAmount" required min="1" max="${
@@ -729,6 +638,11 @@ function showAddToGoalModal(
             <button class="modal-btn add-to-goal-btn">Add to Goal</button>
         </div>
     `;
+
+  // Set user-controlled text via textContent (prevents XSS via goal name).
+  addToGoalModal.querySelector("h2").textContent = `Add to "${goalName}"`;
+  addToGoalModal.querySelector(".goal-progress-line").textContent =
+    `Current progress: $${currentAmount.toFixed(2)} of $${parseFloat(targetAmount).toFixed(2)}`;
 
   document.body.appendChild(addToGoalModal);
 
@@ -780,8 +694,7 @@ function showAddToGoalModal(
     }
 
     // Get current balance
-    const balanceElement = document.querySelector(".balance-amount .amount");
-    const currentBalance = parseFloat(balanceElement.textContent);
+    const { value: currentBalance } = readBalance();
 
     if (amount > currentBalance) {
       showNotification("You don't have enough money in your balance", "error");
@@ -823,30 +736,7 @@ function showAddToGoalModal(
       "success"
     );
 
-    // Add transaction
-    const transactionList = document.querySelector(".transaction-list");
-    const newTransaction = document.createElement("div");
-    newTransaction.className = "transaction-card";
-
-    newTransaction.innerHTML = `
-            <div class="transaction-icon" style="background-color: #825ee4;">
-                <i class="fas fa-piggy-bank"></i>
-            </div>
-            <div class="transaction-info">
-                <h3>Savings: ${goalName}</h3>
-                <p>Money added to goal</p>
-            </div>
-            <div class="transaction-amount">
-                <p class="amount-spent">-$${amount.toFixed(2)}</p>
-                <p class="transaction-date">Just now</p>
-            </div>
-        `;
-
-    // Add transaction to the top of the list
-    transactionList.insertBefore(newTransaction, transactionList.firstChild);
-
-    const transactions = JSON.parse(localStorage.getItem("transactions") || "[]");
-    transactions.unshift({
+    pushTransaction({
       title: `Savings: ${goalName}`,
       description: "Money added to goal",
       category: "savings",
@@ -854,60 +744,70 @@ function showAddToGoalModal(
       date: new Date().toISOString().split("T")[0],
       ageLimit: 0,
     });
-    localStorage.setItem("transactions", JSON.stringify(transactions));
   });
 }
 
 // Initialize the app
 document.addEventListener("DOMContentLoaded", () => {
-  console.log("TeenFinance App initialized");
   loadSavedGoals();
-
-  // Simulate loading data
-  setTimeout(() => {
-    const loadingScreen = document.getElementById("loadingScreen");
-    if (loadingScreen) {
-      loadingScreen.style.display = "none";
-    }
-  }, 1000);
 });
 
-// Footer
+// Footer member popup
+const memberPopup = document.getElementById("pop-up-member");
 
 function showMember(image, name, role, github) {
-  document.getElementById("memberImage").src = image;
-  document.getElementById("memberName").innerText = name;
-  document.getElementById("memberRole").innerText = role;
-  document.getElementById("memberGithub").href = github;
-  document.getElementById("memberGithub").innerText = ` ${github}`;
-  document.getElementById("pop-up-member").style.display = "block";
+  if (!memberPopup) return;
+  const img = document.getElementById("memberImage");
+  if (img) img.src = image;
+  const nameEl = document.getElementById("memberName");
+  if (nameEl) nameEl.textContent = name;
+  const roleEl = document.getElementById("memberRole");
+  if (roleEl) roleEl.textContent = role;
+  const githubEl = document.getElementById("memberGithub");
+  if (githubEl) {
+    githubEl.href = github;
+    githubEl.textContent = ` ${github}`;
+  }
+  memberPopup.style.display = "block";
 }
 
-document.querySelector("#close-btn").onclick = function () {
-  document.getElementById("pop-up-member").style.display = "none";
-};
-
-window.onclick = function (event) {
-  if (event.target == document.getElementById("pop-up-member")) {
-    document.getElementById("pop-up-member").style.display = "none";
-  }
-};
-
-// Assign Tasks
-
-taskCards.forEach((task) => {
-  task.addEventListener("click", (event) => {
-    if (event.target.tagName === "INPUT") {
-      event.stopPropagation();
-    }
-    const balanceAmountElement = document.getElementById("re_balance");
-    let currentBalance = parseFloat(
-      balanceAmountElement.textContent.replace("$", "")
+document.querySelectorAll(".member-link").forEach((el) => {
+  el.addEventListener("click", () => {
+    showMember(
+      el.dataset.image,
+      el.dataset.name,
+      el.dataset.role,
+      el.dataset.github
     );
-    const amountText = task.querySelector(".amount").textContent;
-    const taskAmount = parseFloat(amountText.replace("$", ""));
-    currentBalance += taskAmount;
-    balanceAmountElement.textContent = `$${currentBalance.toFixed(2)}`;
+  });
+});
+
+const memberCloseBtn = document.getElementById("close-btn");
+if (memberCloseBtn && memberPopup) {
+  memberCloseBtn.addEventListener("click", () => {
+    memberPopup.style.display = "none";
+  });
+}
+
+window.addEventListener("click", (event) => {
+  if (memberPopup && event.target === memberPopup) {
+    memberPopup.style.display = "none";
+  }
+});
+
+// Assign Tasks — credit only when the checkbox is ticked.
+taskCards.forEach((task) => {
+  const checkbox = task.querySelector('input[type="checkbox"]');
+  if (!checkbox) return;
+
+  checkbox.addEventListener("change", () => {
+    if (!checkbox.checked) return;
+
+    const amountText = task.querySelector(".amount")?.textContent ?? "";
+    const taskAmount = parseFloat(amountText.replace(/[^\d.-]/g, ""));
+    if (Number.isFinite(taskAmount)) {
+      updateBalance(taskAmount);
+    }
 
     setTimeout(() => {
       task.remove();

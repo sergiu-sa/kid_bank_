@@ -20,17 +20,10 @@ The application simulates a purchase process where teenagers can scan barcodes, 
 ## Features
 
 - Balance and transaction display
-- Product scanning using barcode and camera
+- Product scanning using barcode and camera (Chromium-based browsers only — uses the BarcodeDetector API)
 - Age-restricted product filtering
-- Responsive design using Bootstrap
+- Responsive design (custom CSS, mobile-first)
 - Serverless function to bypass CORS for Open Food Facts API
-
----
-
-## Screenshot
-
-![Kid Bank Screenshot](./assets/screenshots/kidbank-preview.png)  
-_Replace with correct path if your screenshot is saved elsewhere._
 
 ---
 
@@ -38,6 +31,7 @@ _Replace with correct path if your screenshot is saved elsewhere._
 
 - HTML, CSS, JavaScript (Vite)
 - Node.js (Netlify Functions + Axios)
+- Font Awesome, Google Fonts (Poppins), qrcodejs
 - Open Food Facts API
 - GitHub for version control
 
@@ -72,7 +66,7 @@ Team Members:
 ### Installation
 
 ```bash
-git clone https://github.com/sergiu-sa/kid_bank_.git
+git clone https://github.com/sergiu-sa/kid_bank_02.git
 cd kid_bank_02
 npm install
 npm run dev
