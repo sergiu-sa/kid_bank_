@@ -12,8 +12,8 @@ The application simulates a purchase process where teenagers can scan barcodes, 
 
 ## Links
 
-- Live Site: [https://kidbank.vercel.app](https://kidbank.vercel.app)
-- GitHub Repo: [https://github.com/sergiu-sa/kid_bank_02](https://github.com/sergiu-sa/kid_bank_02)
+- Live Site: [https://k1dbank.netlify.app](https://k1dbank.netlify.app)
+- GitHub Repo: [https://github.com/sergiu-sa/kid_bank_](https://github.com/sergiu-sa/kid_bank_)
 
 ---
 
