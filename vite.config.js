@@ -1,16 +1,17 @@
-import { defineConfig } from "vite";
-import { resolve } from "path";
+import { defineConfig } from 'vite'
+import { resolve, dirname } from 'node:path'
+import { fileURLToPath } from 'node:url'
 
-// Multi-page build: every HTML file used as an entry point
-// must be listed here so `vite build` produces it in dist/.
-// Files in `public/` are also copied verbatim to dist/ root.
+const __dirname = dirname(fileURLToPath(import.meta.url))
+
 export default defineConfig({
   build: {
     rollupOptions: {
       input: {
-        main: resolve(__dirname, "index.html"),
-        login: resolve(__dirname, "src/pages/login.html"),
-      },
-    },
-  },
-});
+        main: resolve(__dirname, 'index.html'),
+        scanner: resolve(__dirname, 'scanner.html'),
+        checkout: resolve(__dirname, 'checkout.html')
+      }
+    }
+  }
+})
