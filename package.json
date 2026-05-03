@@ -21,6 +21,7 @@
   "dependencies": {
     "@netlify/blobs": "^10.7.4",
     "@zxing/browser": "^0.2.0",
-    "axios": "^1.8.4"
+    "axios": "^1.8.4",
+    "lucide-static": "^1.14.0"
   }
 }
