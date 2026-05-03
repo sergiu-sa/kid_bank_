@@ -211,6 +211,14 @@ function readBalance() {
   return { value: Number.isFinite(numeric) ? numeric : 0, element: el };
 }
 
+const scanLink = document.getElementById('scanLink')
+if (scanLink) {
+  scanLink.addEventListener('click', () => {
+    const { value } = readBalance()
+    sessionStorage.setItem('kb.balance', String(value))
+  })
+}
+
 // Update balance — animates from current to current+amount.
 function updateBalance(amount) {
   const { value: current, element } = readBalance();

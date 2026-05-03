@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Checkout — KidBank</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/src/assets/checkout.css" />
+    <script type="module" src="/src/js/checkout/index.js" defer></script>
+  </head>
+  <body class="checkout-page">
+    <div class="receipt">
+      <span class="eyebrow" id="receiptEyebrow">Receipt</span>
+      <h2 class="receipt-title">Ready to <em>checkout</em></h2>
+      <div class="meta-line">
+        <span>KIDBANK · POCKET</span>
+        <span id="dateLine"></span>
+      </div>
+      <div id="lines"></div>
+      <div class="totals" id="totals" hidden>
+        <span>Total</span>
+        <span id="totalAmount">$0.00</span>
+      </div>
+      <a class="back-link" href="/">← Back to dashboard</a>
+    </div>
+  </body>
+</html>

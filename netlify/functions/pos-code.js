@@ -6,6 +6,34 @@ const CODE_REGEX = /^KB-[A-HJKM-NP-Z2-9]{4}-[A-HJKM-NP-Z2-9]{4}$/
 const ipBuckets = new Map()
 const RATE_LIMIT_PER_MIN = 10
 
+// In-memory fallback store for local dev when @netlify/blobs isn't configured
+// (i.e. the folder isn't linked to a Netlify site). Implements the subset of
+// the Blobs API we use: get(key, { type: 'json' }) and setJSON(key, value).
+// Process-local; resets on `netlify dev` restart, which matches the 60s TTL
+// semantics anyway. In production, getStore() succeeds and this is unused.
+const memoryStore = new Map()
+const memoryStoreAdapter = {
+  async get(key, opts = {}) {
+    const raw = memoryStore.get(key)
+    if (raw === undefined) return null
+    return opts.type === 'json' ? JSON.parse(raw) : raw
+  },
+  async setJSON(key, value) {
+    memoryStore.set(key, JSON.stringify(value))
+  }
+}
+
+function resolveStore(name) {
+  try {
+    return getStore(name)
+  } catch (err) {
+    if (/has not been configured/i.test(err.message ?? '')) {
+      return memoryStoreAdapter
+    }
+    throw err
+  }
+}
+
 function generateCode() {
   let code = 'KB-'
   for (let i = 0; i < 8; i++) {
@@ -39,7 +67,7 @@ function jsonResponse(statusCode, body) {
 }
 
 export async function handler(event) {
-  const store = getStore('pos-codes')
+  const store = resolveStore('pos-codes')
   const method = event.httpMethod
 
   if (method === 'POST') {

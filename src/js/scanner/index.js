@@ -124,7 +124,7 @@ async function handleDetection(rawCode) {
         }
         return
       }
-      showToast('Couldn't reach product database.')
+      showToast("Couldn't reach product database.")
       return
     }
     const enriched = decorateWithRestriction(result.data)
