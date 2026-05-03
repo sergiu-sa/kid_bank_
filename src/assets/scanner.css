@@ -156,6 +156,12 @@ h2.scanner-title em {
   padding: 24px;
 }
 
+.empty-camera .icon {
+  width: 32px;
+  height: 32px;
+  margin-bottom: 8px;
+}
+
 .manual-entry {
   margin: 12px 0 24px;
 }
