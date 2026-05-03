@@ -1,48 +1,34 @@
-import axios from "axios";
+import { fetchProduct } from '../../src/server/openFoodFacts.js'
+
+const STATUS_BY_CODE = {
+  invalid_barcode: 400,
+  not_found: 404,
+  timeout: 504,
+  upstream_error: 502
+}
+
+function jsonResponse(statusCode, body) {
+  return {
+    statusCode,
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body)
+  }
+}
 
 export async function handler(event) {
-  const parts = event.path.split("/");
-  const code = parts[parts.length - 1];
-  if (!code || code === "barcode") {
-    return {
-      statusCode: 400,
-      body: JSON.stringify({ error: "Missing barcode" }),
-    };
+  const parts = event.path.split('/')
+  const code = parts[parts.length - 1]
+
+  if (!code || code === 'barcode') {
+    return jsonResponse(400, {
+      error: { code: 'invalid_barcode', message: 'Missing barcode' }
+    })
   }
 
-  if (!/^\d{6,14}$/.test(code)) {
-    return {
-      statusCode: 400,
-      body: JSON.stringify({ error: "Invalid barcode format" }),
-    };
-  }
+  const result = await fetchProduct(code)
+  if (result.ok) return jsonResponse(200, result.data)
 
-  const apiUrl = `https://world.openfoodfacts.org/api/v0/product/${code}.json`;
-  console.log(`\u{1F4E3} Fetching: ${apiUrl}`);
-
-  try {
-    const response = await axios.get(apiUrl, {
-      headers: {
-        "User-Agent":
-          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.82 Safari/537.36",
-        Accept: "application/json",
-      },
-    });
-
-    if (response.data.status === 1) {
-      return {
-        statusCode: 200,
-        body: JSON.stringify(response.data.product),
-      };
-    }
-
-    console.error(`Product not found: ${code}`);
-    return { statusCode: 404, body: JSON.stringify({ error: "Product not found" }) };
-  } catch (error) {
-    console.error("API Request Failed:", error.response?.data || error.message);
-    return {
-      statusCode: error.response?.status || 500,
-      body: JSON.stringify({ error: "Failed to fetch data" }),
-    };
-  }
+  return jsonResponse(STATUS_BY_CODE[result.error.code] ?? 500, {
+    error: result.error
+  })
 }

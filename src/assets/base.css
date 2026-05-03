@@ -97,6 +97,12 @@
   --span-size-m: 1.1rem;
   --border-radius-containers: var(--r-md);
   --nav-icon-after-hover: var(--brand);
+
+  /* Scanner / POS extension tokens */
+  --warning: #d97706;
+  --scan-active: rgba(255, 138, 31, 0.16);
+  --scan-success: rgba(31, 138, 90, 0.22);
+  --scan-duplicate: rgba(217, 119, 6, 0.22);
 }
 
 /* Reset */

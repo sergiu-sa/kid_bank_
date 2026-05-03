@@ -20,7 +20,7 @@ The application simulates a purchase process where teenagers can scan barcodes, 
 ## Features
 
 - Balance and transaction display
-- Product scanning using barcode and camera (Chromium-based browsers only — uses the BarcodeDetector API)
+- Product scanning using barcode and camera (works in Chrome, Safari, and Firefox via a ZXing fallback when native `BarcodeDetector` is missing)
 - Age-restricted product filtering
 - Responsive design (custom CSS, mobile-first)
 - Serverless function to bypass CORS for Open Food Facts API
@@ -60,29 +60,37 @@ Team Members:
 
 ### Prerequisites
 
-- Node.js v16 or higher
-- Modern browser (Chrome recommended)
+- Node.js 18 or higher
+- A modern browser (Chrome, Safari, or Firefox — the scanner detects native `BarcodeDetector` support and falls back to a ZXing polyfill where missing).
 
-### Installation
+### Install & run
 
 ```bash
-git clone https://github.com/sergiu-sa/kid_bank_02.git
-cd kid_bank_02
+git clone https://github.com/sergiu-sa/kid_bank_.git
+cd kid_bank_
 npm install
 npm run dev
 ```
 
-In another terminal, start the local barcode proxy:
+`npm run dev` runs Netlify Dev, which serves the Vite app **and** the Netlify Functions on the same port (default `http://localhost:8888`). No second terminal needed.
+
+If you want Vite alone (no functions), use `npm run dev:vite`.
+
+### Tests
 
 ```bash
-node proxy.js
+npm test
 ```
 
-The project will be available at `http://localhost:5173` by default.
+Unit tests cover the pure modules (`cart`, `restrictedDetector`, `posCode` helpers, `money`). UI integration and platform APIs (camera, audio, vibration) are tested by hand.
 
-## Serverless Barcode Function
+### Architecture notes
 
-The barcode lookup is handled by a Netlify Function in `netlify/functions/barcode.js`. When deployed, the scanner automatically calls `/.netlify/functions/barcode/<code>` instead of the local proxy.
+- `index.html` (dashboard), `scanner.html`, and `checkout.html` are Vite multi-page entries; they share styles and modules.
+- The scanner uses native `BarcodeDetector` where available and lazy-loads `@zxing/browser` as a polyfill on Firefox / older Safari.
+- Restricted-product detection is structured-first: it checks Open Food Facts `categories_tags` and `labels_tags` before falling back to keyword matching (`src/data/restricted-keywords.json`).
+- POS codes are issued by `netlify/functions/pos-code.js`, persisted in Netlify Blobs with a 60-second TTL, and resolved by the receipt page on any device. Locally without a linked Netlify site, the function falls back to an in-memory store so `npm run dev` works without setup.
+- Open Food Facts requests go through `netlify/functions/barcode.js`, which wraps a small shared core in `src/server/openFoodFacts.js` (60s cache, trimmed DTO, typed errors).
 
 ## Usage
 
