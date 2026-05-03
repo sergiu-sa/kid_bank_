@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Scan — KidBank</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="/src/assets/scanner.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script type="module" src="/src/js/scanner/index.js" defer></script>
+  </head>
+  <body class="scanner-page">
+    <div class="scanner-shell">
+      <span class="eyebrow">Scanner</span>
+      <h2 class="scanner-title">Point and <em>scan</em></h2>
+
+      <div class="viewfinder" id="viewfinder">
+        <video id="camera" autoplay muted playsinline></video>
+        <div class="corner tl" aria-hidden="true"></div>
+        <div class="corner br" aria-hidden="true"></div>
+        <div class="scan-line" aria-hidden="true"></div>
+        <div class="empty-camera" id="emptyCamera" hidden>
+          <i class="fa-solid fa-camera fa-2x"></i>
+          <p>Camera not available. Type a barcode below to add it.</p>
+        </div>
+        <div class="viewfinder-controls">
+          <button id="torchBtn"  aria-label="Toggle flashlight" hidden><i class="fa-solid fa-bolt"></i></button>
+          <button id="flipBtn"   aria-label="Switch camera"     hidden><i class="fa-solid fa-camera-rotate"></i></button>
+          <button id="muteBtn"   aria-label="Toggle sound"><i class="fa-solid fa-volume-high"></i></button>
+        </div>
+      </div>
+
+      <div class="manual-entry">
+        <span class="eyebrow">Or type it</span>
+        <input id="manualInput" type="text" inputmode="numeric" pattern="[0-9]{6,14}" placeholder="6–14 digit barcode" />
+        <button id="manualSubmit">Add</button>
+      </div>
+
+      <div class="cart-list" id="cartList" aria-live="polite"></div>
+    </div>
+
+    <div class="total-bar" id="totalBar">
+      <div>
+        <div class="total-amount" id="totalAmount">$0.00</div>
+        <div class="balance-after" id="balanceAfter"></div>
+      </div>
+      <button class="pay-now" id="payNowBtn">Pay now</button>
+      <button class="pos-code" id="posCodeBtn">POS code</button>
+      <div class="blocked-msg">Remove restricted items to continue</div>
+    </div>
+
+    <div class="pos-overlay" id="posOverlay" role="dialog" aria-modal="true">
+      <button class="cancel" id="posCancel">← Cancel</button>
+      <span class="eyebrow">POS code</span>
+      <div class="code" id="posCodeText">KB-----</div>
+      <div class="qr-wrap">
+        <svg class="countdown-ring" viewBox="0 0 100 100" aria-hidden="true">
+          <circle cx="50" cy="50" r="48" stroke="rgba(0,0,0,0.08)" />
+          <circle id="countdownCircle" cx="50" cy="50" r="48" stroke="var(--accent)" pathLength="100" />
+        </svg>
+        <div id="qrTarget"></div>
+      </div>
+      <div class="summary" id="posSummary"></div>
+      <div class="caption">Show this to the cashier</div>
+      <button class="regenerate" id="regenerateBtn">Generate new code</button>
+    </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  </body>
+</html>
