@@ -2,6 +2,8 @@
 // Other modules (main.js) call addTransaction() to add new entries
 // and the list re-renders from the in-memory array.
 
+import { ICONS } from "./shared/icons.js"
+
 const transactionsContainerElement = document.querySelector("#js-transactions");
 const STORAGE_KEY = "transactions";
 const STORAGE_VERSION_KEY = "transactionsVersion";
@@ -130,28 +132,28 @@ function formatAmount(product) {
 }
 
 function sortIcon(product) {
-  if (!product || !product.category || userAge === null) return "";
+  if (!product || !product.category || userAge === null) return ""
 
   if (userAge < (product.ageLimit ?? 0)) {
     return `
     <div class="transaction-icon restricted" style="background-color: #ee9b00;">
-      <i class="fa-solid fa-circle-exclamation"></i>
-    </div>`;
+      ${ICONS["circle-exclamation"]}
+    </div>`
   }
 
   const iconType = {
-    refreshments: "fa-burger",
-    gift: "fa-gift",
-    clothing: "fa-shirt",
-    savings: "fa-piggy-bank",
-    restricted: "fa-circle-exclamation",
-  };
+    refreshments: "burger",
+    gift: "gift",
+    clothing: "shirt",
+    savings: "piggy-bank",
+    restricted: "circle-exclamation"
+  }
 
-  const icon = iconType[product.category] || "fa-receipt";
+  const iconName = iconType[product.category] || "receipt"
   return `
     <div class="transaction-icon ${product.category}">
-      <i class="fa-solid ${icon}"></i>
-    </div>`;
+      ${ICONS[iconName] ?? ""}
+    </div>`
 }
 
 // Public API used by main.js

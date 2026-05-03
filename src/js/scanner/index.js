@@ -9,6 +9,7 @@ import {
   create as createPosCode
 } from './posCode.js'
 import { formatCurrency } from '../shared/money.js'
+import { renderIcons, iconNode } from '../shared/icons.js'
 import categoriesJson from '../../data/restricted-categories.json'
 import keywordsJson from '../../data/restricted-keywords.json'
 
@@ -149,7 +150,7 @@ function renderCartItem(item) {
   } else {
     const placeholder = document.createElement('div')
     placeholder.className = 'placeholder'
-    placeholder.innerHTML = '<i class="fa-solid fa-box"></i>'
+    placeholder.appendChild(iconNode('box'))
     li.appendChild(placeholder)
   }
 
@@ -207,7 +208,7 @@ function renderCartItem(item) {
   const remove = document.createElement('button')
   remove.className = 'remove'
   remove.setAttribute('aria-label', 'Remove item')
-  remove.innerHTML = '<i class="fa-solid fa-xmark"></i>'
+  remove.appendChild(iconNode('xmark'))
   remove.addEventListener('click', () => {
     commitFocusedPrice()
     seenCodes.delete(item.code)
@@ -228,6 +229,7 @@ function renderCart(state) {
   els.totalBar.classList.toggle('is-blocked', state.isCheckoutBlocked)
 }
 
+renderIcons()
 cart.subscribe(renderCart)
 
 els.manualSubmit.addEventListener('click', () => {
@@ -245,9 +247,10 @@ els.manualInput.addEventListener('keydown', (e) => {
 
 els.muteBtn.addEventListener('click', () => {
   feedback.setMuted(!feedback.isMuted())
-  els.muteBtn.querySelector('i').className = feedback.isMuted()
-    ? 'fa-solid fa-volume-xmark'
-    : 'fa-solid fa-volume-high'
+  const iconSpan = els.muteBtn.querySelector('.icon')
+  iconSpan.dataset.icon = feedback.isMuted() ? 'volume-xmark' : 'volume-high'
+  iconSpan.removeAttribute('data-icon-rendered')
+  renderIcons(iconSpan.parentElement)
 })
 
 els.payNowBtn.addEventListener('click', () => {
