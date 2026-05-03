@@ -10,10 +10,6 @@
       href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap"
       rel="stylesheet"
     />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-    />
     <link rel="stylesheet" href="/src/assets/scanner.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script type="module" src="/src/js/scanner/index.js" defer></script>
@@ -30,13 +26,13 @@
         <div class="corner br" aria-hidden="true"></div>
         <div class="scan-line" aria-hidden="true"></div>
         <div class="empty-camera" id="emptyCamera" hidden>
-          <i class="fa-solid fa-camera fa-2x"></i>
+          <span class="icon" data-icon="camera" aria-hidden="true"></span>
           <p>Camera not available. Type a barcode below to add it.</p>
         </div>
         <div class="viewfinder-controls">
-          <button id="torchBtn"  aria-label="Toggle flashlight" hidden><i class="fa-solid fa-bolt"></i></button>
-          <button id="flipBtn"   aria-label="Switch camera"     hidden><i class="fa-solid fa-camera-rotate"></i></button>
-          <button id="muteBtn"   aria-label="Toggle sound"><i class="fa-solid fa-volume-high"></i></button>
+          <button id="torchBtn"  aria-label="Toggle flashlight" hidden><span class="icon" data-icon="bolt" aria-hidden="true"></span></button>
+          <button id="flipBtn"   aria-label="Switch camera"     hidden><span class="icon" data-icon="camera-rotate" aria-hidden="true"></span></button>
+          <button id="muteBtn"   aria-label="Toggle sound"><span class="icon" data-icon="volume-high" aria-hidden="true"></span></button>
         </div>
       </div>
 

@@ -1,5 +1,6 @@
 // DOM Elements
 import { addTransaction as pushTransaction } from "./recentTransactions.js";
+import { renderIcons, iconNode } from "./shared/icons.js"
 
 const sidebar = document.getElementById("sidebar");
 const toggleButton = document.getElementById("toggleSidebar");
@@ -108,9 +109,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const shopButton = document.createElement("button");
     shopButton.classList.add("shop-card");
     shopButton.dataset.url = url;
-    shopButton.innerHTML = `<i class="fa-solid fa-globe"></i> ${
+    shopButton.innerHTML = `<span class="icon" data-icon="globe" aria-hidden="true"></span> ${
       new URL(url).hostname
     } <button class="remove-shop-btn">&times;</button>`;
+    renderIcons(shopButton);
 
     attachClick(shopButton);
     attachDelete(shopButton);
@@ -136,9 +138,10 @@ document.addEventListener("DOMContentLoaded", () => {
       const shopButton = document.createElement("button");
       shopButton.classList.add("shop-card");
       shopButton.dataset.url = url;
-      shopButton.innerHTML = `<i class="fa-solid fa-globe"></i> ${
+      shopButton.innerHTML = `<span class="icon" data-icon="globe" aria-hidden="true"></span> ${
         new URL(url).hostname
       } <button class="remove-shop-btn">&times;</button>`;
+      renderIcons(shopButton);
       attachClick(shopButton);
       attachDelete(shopButton);
       shopList.appendChild(shopButton);
@@ -265,7 +268,7 @@ document
         <div class="modal-content">
             <span class="close-add-modal">&times;</span>
             <div class="modal-icon" style="background-color: #94D2BD;">
-                <i class="fas fa-wallet"></i>
+                <span class="icon" data-icon="wallet" aria-hidden="true"></span>
             </div>
             <h2>Add Money</h2>
             <p>Ask a parent or guardian to add money to your account.</p>
@@ -284,6 +287,7 @@ document
     `;
 
     document.body.appendChild(addMoneyModal);
+    renderIcons(addMoneyModal)
 
     // Style the modal elements
     const amountOptions = addMoneyModal.querySelectorAll(".amount-option");
@@ -393,7 +397,7 @@ document.querySelector(".add-goal").addEventListener("click", () => {
         <div class="modal-content">
             <span class="close-goal-modal">&times;</span>
             <div class="modal-icon" style="background-color: #94D2BD;">
-                <i class="fas fa-piggy-bank"></i>
+                <span class="icon" data-icon="piggy-bank" aria-hidden="true"></span>
             </div>
             <h2>Add Savings Goal</h2>
             <form id="goalForm">
@@ -408,26 +412,26 @@ document.querySelector(".add-goal").addEventListener("click", () => {
                 <div class="form-group">
                     <label for="goalIcon">Choose an icon</label>
                     <div class="icon-options">
-                        <div class="icon-option selected" data-icon="fas fa-gamepad">
-                            <i class="fas fa-gamepad"></i>
+                        <div class="icon-option selected" data-pick="gamepad">
+                            <span class="icon" data-icon="gamepad" aria-hidden="true"></span>
                         </div>
-                        <div class="icon-option" data-icon="fas fa-laptop">
-                            <i class="fas fa-laptop"></i>
+                        <div class="icon-option" data-pick="laptop">
+                            <span class="icon" data-icon="laptop" aria-hidden="true"></span>
                         </div>
-                        <div class="icon-option" data-icon="fas fa-tshirt">
-                            <i class="fas fa-tshirt"></i>
+                        <div class="icon-option" data-pick="tshirt">
+                            <span class="icon" data-icon="tshirt" aria-hidden="true"></span>
                         </div>
-                        <div class="icon-option" data-icon="fas fa-plane">
-                            <i class="fas fa-plane"></i>
+                        <div class="icon-option" data-pick="plane">
+                            <span class="icon" data-icon="plane" aria-hidden="true"></span>
                         </div>
-                        <div class="icon-option" data-icon="fas fa-headphones">
-                            <i class="fas fa-headphones"></i>
+                        <div class="icon-option" data-pick="headphones">
+                            <span class="icon" data-icon="headphones" aria-hidden="true"></span>
                         </div>
-                        <div class="icon-option" data-icon="fas fa-bicycle">
-                            <i class="fas fa-bicycle"></i>
+                        <div class="icon-option" data-pick="bicycle">
+                            <span class="icon" data-icon="bicycle" aria-hidden="true"></span>
                         </div>
                     </div>
-                    <input type="hidden" id="goalIcon" value="fas fa-gamepad">
+                    <input type="hidden" id="goalIcon" value="gamepad">
                 </div>
                 <button type="submit" class="modal-btn">Create Goal</button>
             </form>
@@ -435,6 +439,7 @@ document.querySelector(".add-goal").addEventListener("click", () => {
     `;
 
   document.body.appendChild(addGoalModal);
+  renderIcons(addGoalModal)
 
   // Style form elements
   const form = addGoalModal.querySelector("#goalForm");
@@ -503,7 +508,7 @@ document.querySelector(".add-goal").addEventListener("click", () => {
 
       // Update hidden input
       document.getElementById("goalIcon").value =
-        option.getAttribute("data-icon");
+        option.getAttribute("data-pick");
     });
   });
 
@@ -556,9 +561,7 @@ function addSavingsGoal(name, targetAmount, iconClass, savedAmount = 0, save = t
   // Build with DOM APIs so user-entered `name` can't inject HTML.
   const iconWrap = document.createElement("div");
   iconWrap.className = "goal-icon";
-  const iconEl = document.createElement("i");
-  iconEl.className = iconClass; // iconClass comes from a fixed picker
-  iconWrap.appendChild(iconEl);
+  iconWrap.appendChild(iconNode(iconClass))
 
   const info = document.createElement("div");
   info.className = "goal-info";
@@ -633,7 +636,7 @@ function showAddToGoalModal(
         <div class="modal-content">
             <span class="close-add-to-goal-modal">&times;</span>
             <div class="modal-icon" style="background-color: #EE9B00;">
-                <i class="fas fa-piggy-bank"></i>
+                <span class="icon" data-icon="piggy-bank" aria-hidden="true"></span>
             </div>
             <h2></h2>
             <p class="goal-progress-line"></p>
@@ -653,6 +656,7 @@ function showAddToGoalModal(
     `Current progress: $${currentAmount.toFixed(2)} of $${parseFloat(targetAmount).toFixed(2)}`;
 
   document.body.appendChild(addToGoalModal);
+  renderIcons(addToGoalModal)
 
   // Style elements
   const input = addToGoalModal.querySelector("#addAmount");
@@ -757,51 +761,9 @@ function showAddToGoalModal(
 
 // Initialize the app
 document.addEventListener("DOMContentLoaded", () => {
-  loadSavedGoals();
-});
-
-// Footer member popup
-const memberPopup = document.getElementById("pop-up-member");
-
-function showMember(image, name, role, github) {
-  if (!memberPopup) return;
-  const img = document.getElementById("memberImage");
-  if (img) img.src = image;
-  const nameEl = document.getElementById("memberName");
-  if (nameEl) nameEl.textContent = name;
-  const roleEl = document.getElementById("memberRole");
-  if (roleEl) roleEl.textContent = role;
-  const githubEl = document.getElementById("memberGithub");
-  if (githubEl) {
-    githubEl.href = github;
-    githubEl.textContent = ` ${github}`;
-  }
-  memberPopup.style.display = "block";
-}
-
-document.querySelectorAll(".member-link").forEach((el) => {
-  el.addEventListener("click", () => {
-    showMember(
-      el.dataset.image,
-      el.dataset.name,
-      el.dataset.role,
-      el.dataset.github
-    );
-  });
-});
-
-const memberCloseBtn = document.getElementById("close-btn");
-if (memberCloseBtn && memberPopup) {
-  memberCloseBtn.addEventListener("click", () => {
-    memberPopup.style.display = "none";
-  });
-}
-
-window.addEventListener("click", (event) => {
-  if (memberPopup && event.target === memberPopup) {
-    memberPopup.style.display = "none";
-  }
-});
+  renderIcons()
+  loadSavedGoals()
+})
 
 // Assign Tasks — credit only when the checkbox is ticked.
 taskCards.forEach((task) => {
